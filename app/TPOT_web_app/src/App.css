@@ -1,0 +1,254 @@
+* {
+	background: #2c2c54;
+	color: #f7f1e3;
+	text-align: center;
+	min-width: 0px !important;
+}
+
+div,
+p {
+	background: transparent;
+}
+
+/* Dropdown Button */
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}
+
+input[type=range] {
+	-webkit-appearance: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background: transparent;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+	height: 20px;
+	background: #f7f1e3;
+	border: none;
+	border-radius: 3px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+	-webkit-appearance: none;
+	border: none;
+	height: 20px;
+	width: 20px;
+	border-radius: 50%;
+	background: goldenrod;
+	margin-top: -1px;
+	box-shadow: 2px 2px 2px black;
+}
+
+input[type=range]:focus {
+	outline: none;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+	background: #227093;
+}
+
+.UI_wrapper {
+	display: grid;
+	grid-auto-rows: auto;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+	width: 100vw;
+	height: 100vh;
+	background: transparent;
+}
+
+.ui_item {
+	margin: 30px;
+	width: auto;
+}
+
+.ui_item:nth-child(23) {
+	grid-column: 1 / span 2;
+}
+
+.fieldset {
+	border: 1px solid deeppink;
+	background: #262645;
+	border-radius: 6px;
+}
+
+.fieldset:hover {
+	box-shadow: 2px 2px 30px black;
+	;
+}
+
+.choice_title {
+	font-size: 1.3vw;
+}
+
+button {
+	height: auto;
+	width: auto;
+	border: none;
+	background: #ff5252;
+	color: whitesmoke;
+	border-radius: 4px;
+	font-size: 17px;
+	cursor: pointer;
+	padding: 10px;
+}
+
+input {
+	border: none;
+	height: 30px;
+	border-radius: 4px;
+	background: whitesmoke;
+	color: #141414;
+	font-size: 16px;
+	text-align: left !important;
+	padding-left: 5px;
+}
+
+#data {
+	visibility: hidden;
+}
+
+#data_shown {
+	height: auto;
+	width: auto;
+	padding: 10px;
+	background: tomato;
+	color: whitesmoke;
+}
+
+#log_area {
+	background: #161633;
+	overflow: scroll;
+	margin: 0px !important;
+	border-radius: 8px;
+	color: whitesmoke;
+}
+
+.title,
+.subtitle {
+	text-align: center;
+}
+
+.title {
+	font-size: 40px;
+	font-style: italic;
+}
+
+.subtitle {
+	margin-top: -30px;
+	font-size: 24px;
+}
+
+.legend {
+	font-style: italic;
+	font-weight: bold;
+	margin-bottom: 5px;
+	font-size: 20px;
+}
+
+.type {
+	font-style: italic;
+}
+
+.tickmarks {
+	background: repeating-linear-gradient(to right, #ccc, #ccc 10%, #000 10%, #000 11%, #ccc 11%, #ccc 20%);
+}
+
+.log {
+	height: 300px;
+	overflow-y: auto;
+	margin-bottom: 30px;
+	margin-top: 20px;
+}
+
+#train_button {
+	margin-bottom: 40px;
+}
+
+.toggle_wrapper {
+	display: flex;
+	background: transparent;
+	width: 80%;
+	justify-content: space-evenly;
+	text-align: center;
+	margin-left: 50px;
+}
+
+.ball {
+	width: 25px;
+	height: 25px;
+	background: red;
+	border-radius: 50%;
+	margin-left: 0px;
+	cursor: pointer
+}
+
+.ball_container {
+	width: 60px;
+	background: #786fa6;
+	border-radius: 20%;
+}
+
+#ball_id {
+	margin-left: 35px;
+	background: limegreen;
+}
+
+.description {
+	margin-top: 20px;
+}
+
+@media only screen and (max-width: 1000px) {
+	.UI_wrapper {
+		grid-template-rows: auto;
+		grid-template-columns: 100vw;
+	}
+  .ui_item:nth-child(23) {
+    grid-column: 1 / span 1;
+  }
+}

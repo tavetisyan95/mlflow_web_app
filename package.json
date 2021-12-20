@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "radio-buttons-react-native": "^1.0.4",
+    "react-scroll-to-top": "^1.0.5"
+  }
+}
