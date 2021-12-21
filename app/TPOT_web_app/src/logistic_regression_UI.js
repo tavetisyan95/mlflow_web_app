@@ -4,7 +4,7 @@ import {events} from "./events.js";
 
 function LogisticRegressionUI(props){
 	return (
-<div id="log_reg_UI" hidden>
+<div id="logistic_regression_UI">
 <div className="UI_wrapper">
 
 <div>Logistic Regression</div>

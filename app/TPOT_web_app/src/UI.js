@@ -22,17 +22,16 @@ function UI(props) {
 	  
 
 		<div className="ui_item">
-		<select id="selector" onChange={function(){
-			var selector = document.getElementById("selector");
+		<select id="selector_model" onChange={function(){
+			var selector = document.getElementById("selector_model");
 			
-			var log_reg_ui = document.getElementById("log_reg_UI");
-			var lin_reg_ui = document.getElementById("lin_reg_UI");		
+			var log_reg_ui = document.getElementById("logistic_regression_UI");
+			var lin_reg_ui = document.getElementById("linear_regression_UI");		
 			var svc_ui = document.getElementById("svc_UI");
 			var svr_ui = document.getElementById("svr_UI");								
 			
-			var uis = {"log_reg": log_reg_ui, "lin_reg": lin_reg_ui, "svc": svc_ui, "svr": svr_ui}
-			
-		
+			var uis = {"logistic_regression": log_reg_ui, "linear_regression": lin_reg_ui, "svc": svc_ui, "svr": svr_ui}
+					
 			for (var key in uis){
 				if (key == selector.value){
 					uis[key].hidden = false
@@ -41,8 +40,8 @@ function UI(props) {
 				}				
 			}
 			}}>
-			<option value="log_reg" selected="selected">Logistic Regression</option>
-			<option value="lin_reg">Linear Regression</option>  
+			<option value="logistic_regression" selected="selected">Logistic Regression</option>
+			<option value="linear_regression">Linear Regression</option>  
 			<option value="svc">Support Vector Classifier</option> 
 			<option value="svr">Support Vector Regressor</option> 
 		</select>

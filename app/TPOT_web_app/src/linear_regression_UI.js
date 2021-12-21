@@ -4,7 +4,7 @@ import {events} from "./events.js";
 
 function LinearRegressionUI(props){
 	return (
-	<div id="lin_reg_UI" hidden>
+	<div id="linear_regression_UI" hidden>
 <div className="UI_wrapper">
 
 <div>Linear Regression</div>

@@ -80,9 +80,14 @@ export const events = {
     // Obtaining the provided CSV dataset and selected training mode
     var file = document.getElementById("data").files[0];
     //var mode = document.querySelector('input[name="mode"]:checked').value;
-    var mode = events.toggle_choice;
-
+    //var mode = events.toggle_choice;
+	var model = document.getElementById("selector_model").value;
 	var experimentId = document.getElementById("experiment_id").value;
+	
+	var C = JSON.stringify(document.getElementById("C").value);
+	console.log(C);
+	/*var kernel = document.getElementById("selector_kernel").value;
+	var degree = document.getElementById("degree").value;*/
 	
     // Obtaining the values of provided parameters
     //var generations = document.getElementById("generations").value;
@@ -130,7 +135,9 @@ export const events = {
           // Defining our JSON payload for POST
           var payload = JSON.stringify({
             data: JSON.stringify(results.data),
-			experiment_id: experimentId
+			model: model,
+			experiment_id: experimentId,
+			C: C
           });
 
           // Showing log area if verbosity isn't 0

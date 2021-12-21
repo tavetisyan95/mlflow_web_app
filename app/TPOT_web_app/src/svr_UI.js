@@ -4,7 +4,7 @@ import {events} from "./events.js";
 
 function SVRUI(props){
 	return (
-<div id="svr_UI">
+<div id="svr_UI" hidden>
 <div className="UI_wrapper">
 
 <div>SVR</div>
