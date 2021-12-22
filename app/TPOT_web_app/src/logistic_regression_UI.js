@@ -10,7 +10,7 @@ function LogisticRegressionUI(props){
 <div>Logistic Regression</div>
 
 
-<div className="ui_item" >
+{/*<div className="ui_item" >
       <fieldset className="fieldset">
         <legend className="legend">penalty</legend>
         <div className="ui_item">
@@ -26,14 +26,33 @@ function LogisticRegressionUI(props){
           <p>Penalty norm.</p>
         </div>
       </fieldset>
-	</div>
+</div>*/}
+
+<div className="ui_item">
+<fieldset className="fieldset">
+        <legend className="legend">penalty</legend>
+			<input type="checkbox" id="none" name="penalty" value="None"></input>
+			<label for="none">None</label>
+			<input type="checkbox" id="l1" name="penalty" value="l1"></input>
+			<label for="l1">l1</label>
+			<input type="checkbox" id="l2" name="penalty" value="l2" defaultChecked={true}></input>
+			<label for="l2">l2</label>
+			<input type="checkbox" id="elasticnet" name="penalty" value="elasticnet"></input>
+			<label for="elasticnet">elasticnet</label>
+        <div className="description">
+          <p className="type">Float, default: 1.0</p>
+          <p>Penalty norm.</p>
+        </div>
+      </fieldset>
+	 </div>
 
 <div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">dual</legend>
-        <div className="input">
-          <input type="checkbox" id="dual" value="True"></input>
-        </div>
+		<input type="checkbox" id="true" name="dual" value="True"></input>
+		  <label for="True">True</label>
+          <input type="checkbox" id="false" name="dual" value="False" defaultChecked={true}></input>
+		  <label for="false">False</label>		  
         <div className="description">
           <p className="type">Bool, default: False</p>
           <p>Whether to use dual or primal formulation.</p>
@@ -71,12 +90,13 @@ function LogisticRegressionUI(props){
 <div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">fit_intercept</legend>
-        <div className="input">
-          <input type="checkbox" id="fit_intercept" value="True"></input>
-        </div>
+		<input type="checkbox" id="true" name="fit_intercept" value="True"></input>
+		  <label for="True">True</label>
+          <input type="checkbox" id="false" name="fit_intercept" value="False" defaultChecked={true}></input>
+		  <label for="false">False</label>		  
         <div className="description">
-          <p className="type">Bool, default: True</p>
-          <p>Whether a constant (bias or intercept) should be added to the decision function.</p>
+          <p className="type">Bool, default: False</p>
+          <p>Whether to use dual or primal formulation.</p>
         </div>
       </fieldset>
       </div>
@@ -123,24 +143,25 @@ function LogisticRegressionUI(props){
 	</div>
 	
 	
-	<div className="ui_item" >
-      <fieldset className="fieldset">
+	<div className="ui_item">
+<fieldset className="fieldset">
         <legend className="legend">solver</legend>
-        <div className="ui_item">
-		<select id="selector_solver"> 
-			<option value="1">newton-cg</option>
-			<option value="2" selected="selected">lbfgs</option>  
-			<option value="3">liblinear</option>  
-			<option value="4">sag</option>  
-			<option value="5">saga</option>  
-		</select>
-		</div>
+			<input type="checkbox" id="newton-cg" name="solver" value="newton-cg"></input>
+			<label for="newton-cg">newton-cg</label>
+			<input type="checkbox" id="lbfgs" name="solver" value="lbfgs" defaultChecked={true}></input>
+			<label for="lbfgs">lbfgs</label>
+			<input type="checkbox" id="liblinear" name="solver" value="liblinear" ></input>
+			<label for="liblinear">liblinear</label>
+			<input type="checkbox" id="sag" name="solver" value="sag"></input>
+			<label for="sag">sag</label>
+			<input type="checkbox" id="saga" name="solver" value="saga"></input>
+			<label for="saga">saga</label>
         <div className="description">
           <p className="type">Float, default: 1.0</p>
-          <p>The solver.</p>
+          <p>Penalty norm.</p>
         </div>
       </fieldset>
-	</div>
+	 </div>
 	
 	<div className="ui_item" >
       <fieldset className="fieldset">
@@ -156,22 +177,21 @@ function LogisticRegressionUI(props){
 	</div>
 	
 	
-	<div className="ui_item" >
-      <fieldset className="fieldset">
+	<div className="ui_item">
+<fieldset className="fieldset">
         <legend className="legend">multi_class</legend>
-        <div className="ui_item">
-		<select id="selector_multi_class"> 
-			<option value="1" selected="selected">auto</option>
-			<option value="2">ovr</option>  
-			<option value="3">multinomial</option>  
-		</select>
-		</div>
+			<input type="checkbox" id="auto" name="multi_class" value="auto" defaultChecked={true}></input>
+			<label for="auto">auto</label>
+			<input type="checkbox" id="ovr" name="multi_class" value="ovr"></input>
+			<label for="ovr">ovr</label>
+			<input type="checkbox" id="multinomial" name="multi_class" value="multinomial" ></input>
+			<label for="multinomial">multinomial</label>
         <div className="description">
           <p className="type">Float, default: 1.0</p>
-          <p>The solver.</p>
+          <p>Penalty norm.</p>
         </div>
       </fieldset>
-	</div>
+	 </div>
 	
 	<div className="ui_item">
       <fieldset className="fieldset">
@@ -192,15 +212,16 @@ function LogisticRegressionUI(props){
 	<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">warm_start</legend>
-        <div className="input">
-          <input type="checkbox" id="warm_start"></input>
-        </div>
+		<input type="checkbox" id="true" name="warm_start" value="True"></input>
+		  <label for="True">True</label>
+          <input type="checkbox" id="false" name="warm_start" value="False" defaultChecked={true}></input>
+		  <label for="false">False</label>		  
         <div className="description">
           <p className="type">Bool, default: False</p>
-          <p>Whether or not to reuse populations from previous runs.</p>
+          <p>Whether to use dual or primal formulation.</p>
         </div>
       </fieldset>
-     </div>
+      </div>
 	 
 	 
 	 <div className="ui_item">

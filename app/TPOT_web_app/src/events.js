@@ -7,8 +7,29 @@ var responseArea;
 var logArea;
 
 export const events = {
-  dropdown: function () {
-	  document.getElementById("myDropdown").classList.toggle("show");
+  checkedVals: function(checkboxes){
+	 var checked = []
+	 for (var i=0; i < checkboxes.length; i++){
+		 console.log(checkboxes[i].checked);
+		 if (checkboxes[i].checked){
+			 checked.push(checkboxes[i].value);
+		 }
+	 }
+	 
+	 return checked
+  },
+  checkedBoxes: function(checkboxes){
+	var checked = []
+	
+	for (var i=0; i < checkboxes.length; i++){
+		 console.log(checkboxes[i].checked);
+		 if (checkboxes[i].checked){
+			 checked.push(checkboxes[i].value == "True");
+		 }
+	}
+	 
+	 return checked
+	
   },
   hideShowUI: function(){
 	var log_reg_ui = document.getElementById("log_reg_UI");
@@ -84,8 +105,28 @@ export const events = {
 	var model = document.getElementById("selector_model").value;
 	var experimentId = document.getElementById("experiment_id").value;
 	
+	var penalty = events.checkedVals(document.getElementsByName("penalty"));	
+	
+	var dual = events.checkedBoxes(document.getElementsByName("dual"));	
+	console.log(dual);
+	console.log(document.getElementsByName("dual")[0].checked);
+	
+	var tol = JSON.stringify(document.getElementById("tol").value);
 	var C = JSON.stringify(document.getElementById("C").value);
-	console.log(C);
+	var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept"));	
+	var interceptScaling = JSON.stringify(document.getElementById("intercept_scaling").value);
+	// var classWeight
+	var randomState = JSON.stringify(document.getElementById("random_state").value);
+	
+	var solver = events.checkedVals(document.getElementsByName("solver"));
+	
+	var maxIter = JSON.stringify(document.getElementById("max_iter").value);
+	var multiClass = events.checkedVals(document.getElementsByName("multi_class"));
+	var verbose = JSON.stringify(document.getElementById("verbose").value);
+	var warmStart = events.checkedBoxes(document.getElementsByName("warm_start"));	
+	var nJobs = JSON.stringify(document.getElementById("n_jobs").value);
+	var l1Ratio = JSON.stringify(document.getElementById("l1_ratio").value);	
+	
 	/*var kernel = document.getElementById("selector_kernel").value;
 	var degree = document.getElementById("degree").value;*/
 	
@@ -134,10 +175,23 @@ export const events = {
         complete: function (results) {
           // Defining our JSON payload for POST
           var payload = JSON.stringify({
+			penalty: penalty,
             data: JSON.stringify(results.data),
 			model: model,
 			experiment_id: experimentId,
-			C: C
+			dual: dual,
+			tol: tol,
+			C: C,
+			fit_intercept: fitIntercept,
+			intercept_scaling: interceptScaling,
+			random_state: randomState,
+			solver: solver,
+			max_iter: maxIter,
+			multi_class: multiClass,
+			verbose: verbose,
+			warm_start: warmStart,
+			n_jobs: nJobs,
+			l1_ratio: l1Ratio
           });
 
           // Showing log area if verbosity isn't 0
