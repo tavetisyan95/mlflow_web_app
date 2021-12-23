@@ -10,7 +10,7 @@ export const events = {
   checkedVals: function(checkboxes){
 	 var checked = []
 	 for (var i=0; i < checkboxes.length; i++){
-		 console.log(checkboxes[i].checked);
+		 //console.log(checkboxes[i].checked);
 		 if (checkboxes[i].checked){
 			 checked.push(checkboxes[i].value);
 		 }
@@ -22,7 +22,7 @@ export const events = {
 	var checked = []
 	
 	for (var i=0; i < checkboxes.length; i++){
-		 console.log(checkboxes[i].checked);
+		 //console.log(checkboxes[i].checked);
 		 if (checkboxes[i].checked){
 			 checked.push(checkboxes[i].value == "True");
 		 }
@@ -30,16 +30,6 @@ export const events = {
 	 
 	 return checked
 	
-  },
-  hideShowUI: function(){
-	var log_reg_ui = document.getElementById("log_reg_UI");
-	
-	if (log_reg_ui.hidden == false){
-		log_reg_ui.hidden = true;
-	}
-	else{
-		log_reg_ui.hidden = false;
-	}
   },
   // Function for checking training logs upon launch
   checkLog: async function () {
@@ -91,7 +81,6 @@ export const events = {
         }
       }
     }
-
     // Scrolling to the bottom of the training logs
     logArea.scrollTop = logArea.scrollHeight;
   },
@@ -113,7 +102,18 @@ export const events = {
 	
 	var tol = JSON.stringify(document.getElementById("tol").value);
 	var C = JSON.stringify(document.getElementById("C").value);
-	var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept"));	
+	
+	
+	var selector = document.getElementById("selector_model");
+	
+	if (selector.value == "logistic_regression"){
+		var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept"));
+	} else if (selector.value == "linear_regression"){
+		var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept_lin"));
+	}
+	
+	//var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept"));
+	console.log(document.getElementsByName("fit_intercept"));
 	var interceptScaling = JSON.stringify(document.getElementById("intercept_scaling").value);
 	// var classWeight
 	var randomState = JSON.stringify(document.getElementById("random_state").value);
@@ -126,29 +126,6 @@ export const events = {
 	var warmStart = events.checkedBoxes(document.getElementsByName("warm_start"));	
 	var nJobs = JSON.stringify(document.getElementById("n_jobs").value);
 	var l1Ratio = JSON.stringify(document.getElementById("l1_ratio").value);	
-	
-	/*var kernel = document.getElementById("selector_kernel").value;
-	var degree = document.getElementById("degree").value;*/
-	
-    // Obtaining the values of provided parameters
-    //var generations = document.getElementById("generations").value;
-    /*var populationSize = document.getElementById("population_size").value;
-    var offspringSize = document.getElementById("offspring_size").value;
-    var mutationRate = document.getElementById("mutation_rate").value;
-    var crossoverRate = document.getElementById("crossover_rate").value;
-    var scoring = document.getElementById("scoring").value;
-    var cv = document.getElementById("cv").value;
-    var subsample = document.getElementById("subsample").value;
-    var nJobs = document.getElementById("n_jobs").value;
-    var maxTimeMins = document.getElementById("max_time_mins").value;
-    var maxEvalTimeMins = document.getElementById("max_eval_time_mins").value;
-    var randomState = document.getElementById("random_state").value;
-    var configDict = document.getElementById("config_dict").value;
-    var template = document.getElementById("template").value;
-    var earlyStop = document.getElementById("early_stop").value;
-    var verbosity = document.getElementById("verbosity").value;
-    var useDask = document.getElementById("use_dask").checked;
-    var warmStart = document.getElementById("warm_start").checked;*/
 
     // Obtaining the button object for training
     var trainButton = document.getElementById("train_button");
@@ -220,7 +197,7 @@ export const events = {
           )
             .then((response) => response.json())
             .then((data) => (responseArea.innerText = data.Output)) // Showing the success message defined in the Python API
-            .then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
+            //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
             .then(() => (trainButton.style.visibility = "visible")) // Making train button visible
             .then(() => clearInterval(interval)) // Clearing the interval that repeatedly checked logs
             .catch((error) => {

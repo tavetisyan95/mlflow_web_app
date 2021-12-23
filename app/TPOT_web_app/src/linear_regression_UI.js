@@ -1,6 +1,7 @@
 import "./App.css";
 import {config} from "./config.js";
 import {events} from "./events.js";
+import FitInterceptUI from "./fit_intercept_UI.js";
 
 function LinearRegressionUI(props){
 	return (
@@ -10,18 +11,21 @@ function LinearRegressionUI(props){
 <div>Linear Regression</div>
 
 
-<div className="ui_item">
+{<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">fit_intercept</legend>
-        <div className="input">
-          <input type="checkbox" id="fit_intercept" value="True"></input>
-        </div>
+		<input type="checkbox" name="fit_intercept_lin" value="True"></input>
+		  <label for="True">True</label>
+          <input type="checkbox"  name="fit_intercept_lin" value="False" defaultChecked={true}></input>
+		  <label for="false">False</label>		  
         <div className="description">
-          <p className="type">Bool, default: True</p>
-          <p>Whether a constant (bias or intercept) should be added to the decision function.</p>
+          <p className="type">Bool, default: False</p>
+          <p>Whether to use dual or primal formulation.</p>
         </div>
       </fieldset>
-      </div>
+		  </div>}
+
+{/*<FitInterceptUI/>*/}
 
 <div className="ui_item">
       <fieldset className="fieldset">
