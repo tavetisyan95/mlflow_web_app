@@ -7,7 +7,7 @@ import {events} from "./events.js";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App onLoad={events.checkLog()}/>
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );

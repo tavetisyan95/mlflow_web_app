@@ -84,15 +84,28 @@ export const events = {
     // Scrolling to the bottom of the training logs
     logArea.scrollTop = logArea.scrollHeight;
   },
-
-  // Function for training TPOT
-  trainTPOT: function () {
-    // Obtaining the provided CSV dataset and selected training mode
-    var file = document.getElementById("data").files[0];
+  trainModel: function()
+  {
+	  // Obtaining the provided CSV dataset and selected training mode
+	  var file = document.getElementById("data").files[0];
     //var mode = document.querySelector('input[name="mode"]:checked').value;
     //var mode = events.toggle_choice;
 	var model = document.getElementById("selector_model").value;
 	var experimentId = document.getElementById("experiment_id").value;
+	
+	var selector = document.getElementById("selector_model");
+	
+	if (selector.value == "logistic_regression"){
+		events.trainClassifier(file, model, experimentId);
+	} else if (selector.value == "linear_regression"){
+		events.trainRegressor(file, model, experimentId);
+	}
+	
+  },  
+  // Function for training TPOT
+  trainClassifier: function (file, model, experimentId) {
+    
+    
 	
 	var penalty = events.checkedVals(document.getElementsByName("penalty"));	
 	
@@ -104,16 +117,12 @@ export const events = {
 	var C = JSON.stringify(document.getElementById("C").value);
 	
 	
-	var selector = document.getElementById("selector_model");
 	
-	if (selector.value == "logistic_regression"){
-		var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept"));
-	} else if (selector.value == "linear_regression"){
-		var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept_lin"));
-	}
+		var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept"));	
+		
+
 	
 	//var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept"));
-	console.log(document.getElementsByName("fit_intercept"));
 	var interceptScaling = JSON.stringify(document.getElementById("intercept_scaling").value);
 	// var classWeight
 	var randomState = JSON.stringify(document.getElementById("random_state").value);
@@ -125,58 +134,88 @@ export const events = {
 	var verbose = JSON.stringify(document.getElementById("verbose").value);
 	var warmStart = events.checkedBoxes(document.getElementsByName("warm_start"));	
 	var nJobs = JSON.stringify(document.getElementById("n_jobs").value);
-	var l1Ratio = JSON.stringify(document.getElementById("l1_ratio").value);	
-
-    // Obtaining the button object for training
-    var trainButton = document.getElementById("train_button");
+	var l1Ratio = JSON.stringify(document.getElementById("l1_ratio").value);
+	
+	events.parseData(file, {penalty: penalty,					
+					model: model,
+					experiment_id: experimentId,
+					dual: dual,
+					tol: tol,
+					C: C,
+					fit_intercept: fitIntercept,
+					intercept_scaling: interceptScaling,
+					random_state: randomState,
+					solver: solver,
+					max_iter: maxIter,
+					multi_class: multiClass,
+					verbose: verbose,
+					warm_start: warmStart,
+					n_jobs: nJobs,
+					l1_ratio: l1Ratio});
+	
+	/*var trainButton = document.getElementById("train_button");
+	logArea = document.getElementById("log_area");
+    downloadArea = document.getElementById("download");
+    responseArea = document.getElementById("response");
 
     // Hiding the script download link and log area and showing the response area
     downloadArea.hidden = true;
     responseArea.hidden = false;
     logArea.hidden = true;
-
-    // Changing the status message in the response area
+	
+	
+	// Changing the status message in the response area
     responseArea.innerText = "Training...";
-
-    /* Setting an interval to continuously monitor training logs
-		in order to update them on-screen as training progresses
-		*/
-    var interval = setInterval(events.readLog, 50, true);
-
-    // Trying to parse CSV data and train TPOT
-    try {
-      papa.parse(file, {
-        download: false,
-        header: true,
-        skipEmptyLines: true,
-        complete: function (results) {
-          // Defining our JSON payload for POST
-          var payload = JSON.stringify({
-			penalty: penalty,
-            data: JSON.stringify(results.data),
-			model: model,
-			experiment_id: experimentId,
-			dual: dual,
-			tol: tol,
-			C: C,
-			fit_intercept: fitIntercept,
-			intercept_scaling: interceptScaling,
-			random_state: randomState,
-			solver: solver,
-			max_iter: maxIter,
-			multi_class: multiClass,
-			verbose: verbose,
-			warm_start: warmStart,
-			n_jobs: nJobs,
-			l1_ratio: l1Ratio
+	
+	var payload = JSON.stringify({
+					penalty: penalty,
+					data: JSON.stringify(data),
+					model: model,
+					experiment_id: experimentId,
+					dual: dual,
+					tol: tol,
+					C: C,
+					fit_intercept: fitIntercept,
+					intercept_scaling: interceptScaling,
+					random_state: randomState,
+					solver: solver,
+					max_iter: maxIter,
+					multi_class: multiClass,
+					verbose: verbose,
+					warm_start: warmStart,
+					n_jobs: nJobs,
+					l1_ratio: l1Ratio
           });
-
-          // Showing log area if verbosity isn't 0
-          /*if (verbosity != 0) {
-            logArea.hidden = false;
-          }*/
-
-          // Hiding train button
+		  
+		  
+	
+	try {
+		papa.parse(file, {
+			download: false,
+			header: true,
+			skipEmptyLines: true,
+			complete: function (results){
+				var payload = JSON.stringify({
+					penalty: penalty,
+					data: JSON.stringify(results.data),
+					model: model,
+					experiment_id: experimentId,
+					dual: dual,
+					tol: tol,
+					C: C,
+					fit_intercept: fitIntercept,
+					intercept_scaling: interceptScaling,
+					random_state: randomState,
+					solver: solver,
+					max_iter: maxIter,
+					multi_class: multiClass,
+					verbose: verbose,
+					warm_start: warmStart,
+					n_jobs: nJobs,
+					l1_ratio: l1Ratio
+          });
+		  
+		  // Hiding train button
           trainButton.style.visibility = "hidden";
 
           // Sending a POST request to our Python API
@@ -199,13 +238,187 @@ export const events = {
             .then((data) => (responseArea.innerText = data.Output)) // Showing the success message defined in the Python API
             //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
             .then(() => (trainButton.style.visibility = "visible")) // Making train button visible
-            .then(() => clearInterval(interval)) // Clearing the interval that repeatedly checked logs
+            //.then(() => clearInterval(interval)) // Clearing the interval that repeatedly checked logs
             .catch((error) => {
               console.error("Error", error);
             });
-        },
-      });
-    } catch {
+		  
+	}})} catch {
+      // Updating response message if papa.parse fails because a CSV dataset was not selected
+      responseArea.innerText =
+        "Dataset not selected. Please select a dataset for tuning.";
+    }*/
+
+    /* Setting an interval to continuously monitor training logs
+		in order to update them on-screen as training progresses
+		*/
+    //var interval = setInterval(events.readLog, 50, true);
+	
+	/*var trainButton = document.getElementById("train_button");
+	logArea = document.getElementById("log_area");
+    downloadArea = document.getElementById("download");
+    responseArea = document.getElementById("response");
+
+    // Hiding the script download link and log area and showing the response area
+    downloadArea.hidden = true;
+    responseArea.hidden = false;
+    logArea.hidden = true;
+
+    // Changing the status message in the response area
+    responseArea.innerText = "Training...";
+	  
+	  // Hiding train button
+          trainButton.style.visibility = "hidden";
+
+          // Sending a POST request to our Python API
+          fetch(
+            "http://" +
+              config.api_url +
+              ":" +
+              config.api_port +
+              "/" +
+              config.api_endpoint,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: payload,
+            }
+          )
+            .then((response) => response.json())
+            .then((data) => (responseArea.innerText = data.Output)) // Showing the success message defined in the Python API
+            //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
+            .then(() => (trainButton.style.visibility = "visible")) // Making train button visible
+            //.then(() => clearInterval(interval)) // Clearing the interval that repeatedly checked logs
+            .catch((error) => {
+              console.error("Error", error);
+            });*/
+  },
+  trainRegressor: function (file, model, experimentId){
+	  var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept_lin"));
+	  var normalize = events.checkedBoxes(document.getElementsByName("normalize"));
+	  var copyX = events.checkedBoxes(document.getElementsByName("copy_X"));
+	  var positive = events.checkedBoxes(document.getElementsByName("positive"));
+	  var nJobs = document.getElementById("n_jobs").value;
+	  
+	  
+	  events.parseData(file, {fit_intercept: fitIntercept,					
+					model: model,
+					experiment_id: experimentId,
+					normalize: normalize,
+					copy_X: copyX,
+					positive: positive,
+					n_jobs: nJobs});	  
+  },
+  train: function(payload){
+	      // Obtaining the button object for training
+    var trainButton = document.getElementById("train_button");
+	logArea = document.getElementById("log_area");
+    downloadArea = document.getElementById("download");
+    responseArea = document.getElementById("response");
+
+    // Hiding the script download link and log area and showing the response area
+    downloadArea.hidden = true;
+    responseArea.hidden = false;
+    logArea.hidden = true;
+
+    // Changing the status message in the response area
+    responseArea.innerText = "Training...";
+	  
+	  // Hiding train button
+          trainButton.style.visibility = "hidden";
+
+          // Sending a POST request to our Python API
+          fetch(
+            "http://" +
+              config.api_url +
+              ":" +
+              config.api_port +
+              "/" +
+              config.api_endpoint,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: payload,
+            }
+          )
+            .then((response) => response.json())
+            .then((data) => (responseArea.innerText = data.Output)) // Showing the success message defined in the Python API
+            //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
+            .then(() => (trainButton.style.visibility = "visible")) // Making train button visible
+            //.then(() => clearInterval(interval)) // Clearing the interval that repeatedly checked logs
+            .catch((error) => {
+              console.error("Error", error);
+            });
+  },
+  parseData: function(){	 
+	  console.log("Initial check")
+	  console.log(arguments[1])
+	  
+	  console.log("Before adding parsed data")				
+	  var payload = arguments[1];
+	  console.log(payload);
+	  
+	  
+	  var trainButton = document.getElementById("train_button");
+	logArea = document.getElementById("log_area");
+    downloadArea = document.getElementById("download");
+    responseArea = document.getElementById("response");
+
+    // Hiding the script download link and log area and showing the response area
+    downloadArea.hidden = true;
+    responseArea.hidden = false;
+    logArea.hidden = true;
+
+    // Changing the status message in the response area
+    responseArea.innerText = "Training...";
+	  
+	  try {
+		papa.parse(arguments[0], {
+			download: false,
+			header: true,
+			skipEmptyLines: true,
+			complete: function (results){				
+				
+				payload.data = JSON.stringify(results.data);
+				console.log("After adding parsed data")
+				console.log(payload);
+				payload = JSON.stringify(payload);
+				console.log(payload.max_iter);				
+		
+		  
+		  // Hiding train button
+          trainButton.style.visibility = "hidden";
+
+          // Sending a POST request to our Python API
+          fetch(
+            "http://" +
+              config.api_url +
+              ":" +
+              config.api_port +
+              "/" +
+              config.api_endpoint,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: payload,
+            }
+          )
+            .then((response) => response.json())
+            .then((data) => (responseArea.innerText = data.Output)) // Showing the success message defined in the Python API
+            //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
+            .then(() => (trainButton.style.visibility = "visible")) // Making train button visible
+            //.then(() => clearInterval(interval)) // Clearing the interval that repeatedly checked logs
+            .catch((error) => {
+              console.error("Error", error);
+            });
+		  
+		}})} catch {
       // Updating response message if papa.parse fails because a CSV dataset was not selected
       responseArea.innerText =
         "Dataset not selected. Please select a dataset for tuning.";

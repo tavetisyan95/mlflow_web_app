@@ -94,9 +94,9 @@ function LogisticRegressionUI(props){
 		  {<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">fit_intercept</legend>
-		<input type="checkbox" name="fit_intercept" value="True"></input>
+		<input type="checkbox" name="fit_intercept" value="True" defaultChecked={true}></input>
 		  <label for="True">True</label>
-          <input type="checkbox" name="fit_intercept" value="False" defaultChecked={true}></input>
+          <input type="checkbox" name="fit_intercept" value="False"></input>
 		  <label for="false">False</label>		  
         <div className="description">
           <p className="type">Bool, default: False</p>

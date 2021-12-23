@@ -14,9 +14,9 @@ function LinearRegressionUI(props){
 {<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">fit_intercept</legend>
-		<input type="checkbox" name="fit_intercept_lin" value="True"></input>
+		<input type="checkbox" name="fit_intercept_lin" value="True" defaultChecked={true}></input>
 		  <label for="True">True</label>
-          <input type="checkbox"  name="fit_intercept_lin" value="False" defaultChecked={true}></input>
+          <input type="checkbox"  name="fit_intercept_lin" value="False"></input>
 		  <label for="false">False</label>		  
         <div className="description">
           <p className="type">Bool, default: False</p>
@@ -27,45 +27,48 @@ function LinearRegressionUI(props){
 
 {/*<FitInterceptUI/>*/}
 
-<div className="ui_item">
+{<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">normalize</legend>
-        <div className="input">
-          <input type="checkbox" id="normalize" value="False"></input>
-        </div>
+		<input type="checkbox" name="normalize" value="True" defaultChecked={true}></input>
+		  <label for="True">True</label>
+          <input type="checkbox"  name="normalize" value="False"></input>
+		  <label for="false">False</label>		  
         <div className="description">
           <p className="type">Bool, default: False</p>
-          <p>Whether to normalize regressors X.</p>
+          <p>Whether to use dual or primal formulation.</p>
         </div>
       </fieldset>
-      </div>
+		  </div>}
 	  
 	  
-	  <div className="ui_item">
+	  {<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">copy_X</legend>
-        <div className="input">
-          <input type="checkbox" id="copy_X" value="True"></input>
-        </div>
-        <div className="description">
-          <p className="type">Bool, default: True</p>
-          <p>Whether to copy or overwrite X.</p>
-        </div>
-      </fieldset>
-      </div>
-	  
-	  <div className="ui_item">
-      <fieldset className="fieldset">
-        <legend className="legend">positive</legend>
-        <div className="input">
-          <input type="checkbox" id="positive" value="False"></input>
-        </div>
+		<input type="checkbox" name="copy_X" value="True" defaultChecked={true}></input>
+		  <label for="True">True</label>
+          <input type="checkbox"  name="copy_X" value="False"></input>
+		  <label for="false">False</label>		  
         <div className="description">
           <p className="type">Bool, default: False</p>
-          <p>When set to True, forces the coefficients to be positive.</p>
+          <p>Whether to use dual or primal formulation.</p>
         </div>
       </fieldset>
-      </div>
+		  </div>}
+	  
+	  {<div className="ui_item">
+      <fieldset className="fieldset">
+        <legend className="legend">positive</legend>
+		<input type="checkbox" name="positive" value="True"></input>
+		  <label for="True">True</label>
+          <input type="checkbox"  name="positive" value="False" defaultChecked={true}></input>
+		  <label for="false">False</label>		  
+        <div className="description">
+          <p className="type">Bool, default: False</p>
+          <p>Whether to use dual or primal formulation.</p>
+        </div>
+      </fieldset>
+		  </div>}
 	  
 	  
 	  <div className="ui_item">

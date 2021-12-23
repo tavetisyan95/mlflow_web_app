@@ -89,7 +89,7 @@ function UI(props) {
       </fieldset>
       </div>
       <div className="ui_item">
-      <button id="train_button" onClick={(event) => {events.trainTPOT()}}>Train</button> 
+      <button id="train_button" onClick={(event) => {events.trainModel()}}>Train</button> 
       </div>
     </div>
   );
