@@ -95,10 +95,10 @@ export const events = {
 	
 	var selector = document.getElementById("selector_model");
 	
-	var scoring = document.getElementById("scoring").value;
+	var scoring = JSON.stringify(document.getElementById("scoring").value);
 	var nJobsGridSearch = document.getElementById("n_jobs_gridsearch").value;
 	var refit = document.getElementById("refit").checked;
-	var cv = document.getElementById("cv").value;
+	var cv = JSON.stringify(document.getElementById("cv").value);
 	var verboseGridSearch = document.getElementById("verbose_gridsearch").value;
 	//var preDispatch
 	var return_train_score = document.getElementById("return_train_score").checked;
