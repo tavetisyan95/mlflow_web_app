@@ -13,7 +13,10 @@ function App() {
 			<p className="title">TPOT TRAINER</p>
 			<p className="subtitle">Select parameters for TPOT training.</p>			
 			
-			<UI/>			
+			<UI/>		
+			<div/>
+			<div/>
+			<div/>
 			<LogisticRegressionUI/>
 			<LinearRegressionUI/>
 			<SVCUI/>

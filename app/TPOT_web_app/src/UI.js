@@ -20,7 +20,9 @@ function UI(props) {
       </fieldset>
       </div>  
 	 
-	  
+	  <div className="ui_item">
+      <button id="train_button" onClick={(event) => {events.trainModel()}}>Train</button> 
+      </div>
 
 		<div className="ui_item">
 		<select id="selector_model" onChange={function(){
@@ -61,7 +63,105 @@ function UI(props) {
           </p>
         </div>
       </fieldset>
-      </div>      
+      </div> 
+	  
+	  <div className="ui_item">
+      <fieldset className="fieldset">
+        <legend className="legend">scoring</legend>
+        <div className="input">
+          <input id="scoring" type="text" defaultValue="None"></input>
+        </div>
+        <div className="description">
+          <p className="type">Integer or None, default: None</p>
+          <p>
+            The scoring functions to try.
+          </p>
+        </div>
+      </fieldset>
+      </div> 
+	  
+	  <div className="ui_item">
+      <fieldset className="fieldset">
+        <legend className="legend">n_jobs</legend>
+        <div className="input">
+          <input id="n_jobs_gridsearch" type="text" defaultValue="None"></input>
+        </div>
+        <div className="description">
+          <p className="type">Integer or None, default: None</p>
+          <p>The number of CPU cores used for training.</p>
+        </div>
+      </fieldset>
+      </div>
+	  
+	  <div className="ui_item">
+      <fieldset className="fieldset">
+        <legend className="legend">refit</legend>
+        <div className="input">
+          <input type="checkbox" id="refit" defaultChecked={true}></input>
+        </div>
+        <div className="description">
+          <p className="type">Bool, default: True</p>
+          <p>Whether to refit an estimator using the best found parameters on the whole dataset..</p>
+        </div>
+      </fieldset>
+     </div>
+	 
+	 <div className="ui_item">
+      <fieldset className="fieldset">
+        <legend className="legend">cv</legend>
+        <div className="input">
+          <input id="cv" type="text" defaultValue="5"></input>
+        </div>
+        <div className="description">
+          <p className="type">Integer, default: 5</p>
+          <p>The number of cross-validation folds.</p>
+        </div>
+      </fieldset>
+      </div>
+	  
+	  
+	  <div className="ui_item">
+      <fieldset className="fieldset">
+        <legend className="legend">verbose</legend>
+        <div className="input">
+          <input type="text" id="verbose_gridsearch" defaultValue="2"></input>
+        </div>
+        <div className="description">
+          <p className="type">0 or any positive integer, default: 0</p>
+          <p>The verbosity level of the optimizer.</p>
+        </div>
+      </fieldset>
+      </div>
+	  
+	  <div className="ui_item">
+      <fieldset className="fieldset">
+        <legend className="legend">pre_dispatch</legend>
+        <div className="input">
+          <input id="pre_dispatch" type="text" defaultValue="0"></input>
+        </div>
+        <div className="description">
+          <p className="type">Integer, default: 2*n_jobs</p>
+          <p>
+            The ID of the experiment that the run will be logged to.
+          </p>
+        </div>
+      </fieldset>
+      </div>
+
+		
+	<div className="ui_item">
+      <fieldset className="fieldset">
+        <legend className="legend">return_train_score</legend>
+        <div className="input">
+          <input type="checkbox" id="return_train_score" defaultChecked={false}></input>
+        </div>
+        <div className="description">
+          <p className="type">Bool, default: False</p>
+          <p>If False, the cv_results_ attribute will not include training scores.</p>
+        </div>
+      </fieldset>
+     </div>
+	  
 	
       <div className="ui_item">
       <fieldset className="fieldset">
@@ -88,9 +188,7 @@ function UI(props) {
         </div>
       </fieldset>
       </div>
-      <div className="ui_item">
-      <button id="train_button" onClick={(event) => {events.trainModel()}}>Train</button> 
-      </div>
+      
     </div>
   );
 }
