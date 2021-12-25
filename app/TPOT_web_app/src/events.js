@@ -95,20 +95,20 @@ export const events = {
 	
 	var selector = document.getElementById("selector_model");
 	
-	var scoring = JSON.stringify(document.getElementById("scoring").value);
-	var nJobsGridSearch = document.getElementById("n_jobs_gridsearch").value;
-	var refit = document.getElementById("refit").checked;
+	//var scoring = JSON.stringify(document.getElementById("scoring").value);
+	var nJobs = JSON.stringify(document.getElementById("n_jobs").value);
+	//var refit = document.getElementById("refit").checked;
 	var cv = JSON.stringify(document.getElementById("cv").value);
-	var verboseGridSearch = document.getElementById("verbose_gridsearch").value;
+	//var verboseGridSearch = document.getElementById("verbose_gridsearch").value;
 	//var preDispatch
 	var return_train_score = document.getElementById("return_train_score").checked;
 	
 	var gridSearchParams = {
-		scoring: scoring,
-		n_jobs_gridsearch: nJobsGridSearch,
-		refit: refit,
+		//scoring: scoring,
+		n_jobs: nJobs,
+		//refit: refit,
 		cv: cv,
-		verbose_gridsearch: verboseGridSearch,
+		//verbose_gridsearch: verboseGridSearch,
 		return_train_score: return_train_score
 	}
 	
@@ -150,7 +150,6 @@ export const events = {
 	var multiClass = events.checkedVals(document.getElementsByName("multi_class"));
 	var verbose = JSON.stringify(document.getElementById("verbose").value);
 	var warmStart = events.checkedBoxes(document.getElementsByName("warm_start"));	
-	var nJobs = JSON.stringify(document.getElementById("n_jobs").value);
 	var l1Ratio = JSON.stringify(document.getElementById("l1_ratio").value);
 	
 	events.parseData(file, {penalty: penalty,					
@@ -167,7 +166,6 @@ export const events = {
 					multi_class: multiClass,
 					verbose: verbose,
 					warm_start: warmStart,
-					n_jobs: nJobs,
 					l1_ratio: l1Ratio},
 					gridSearchParams);
   },
@@ -175,8 +173,7 @@ export const events = {
 	  var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept_lin"));
 	  var normalize = events.checkedBoxes(document.getElementsByName("normalize"));
 	  var copyX = events.checkedBoxes(document.getElementsByName("copy_X"));
-	  var positive = events.checkedBoxes(document.getElementsByName("positive"));
-	  var nJobs = JSON.stringify(document.getElementById("n_jobs").value);
+	  var positive = events.checkedBoxes(document.getElementsByName("positive"));	  
 	  
 	  
 	  events.parseData(file, {fit_intercept: fitIntercept,					
@@ -184,8 +181,7 @@ export const events = {
 					experiment_id: experimentId,
 					normalize: normalize,
 					copy_X: copyX,
-					positive: positive,
-					n_jobs: nJobs},
+					positive: positive},
 					gridSearchParams);	  
   },
   parseData: function(){	 

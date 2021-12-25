@@ -66,7 +66,7 @@ function UI(props) {
       </fieldset>
       </div> 
 	  
-	  <div className="ui_item">
+	  {/*<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">scoring</legend>
         <div className="input">
@@ -79,13 +79,13 @@ function UI(props) {
           </p>
         </div>
       </fieldset>
-      </div> 
+      </div> */}
 	  
 	  <div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">n_jobs</legend>
         <div className="input">
-          <input id="n_jobs_gridsearch" type="text" defaultValue="None"></input>
+          <input id="n_jobs" type="text" defaultValue="None"></input>
         </div>
         <div className="description">
           <p className="type">Integer or None, default: None</p>
@@ -94,7 +94,7 @@ function UI(props) {
       </fieldset>
       </div>
 	  
-	  <div className="ui_item">
+	  {/*<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">refit</legend>
         <div className="input">
@@ -105,7 +105,7 @@ function UI(props) {
           <p>Whether to refit an estimator using the best found parameters on the whole dataset..</p>
         </div>
       </fieldset>
-     </div>
+	  </div>*/}
 	 
 	 <div className="ui_item">
       <fieldset className="fieldset">
@@ -121,7 +121,7 @@ function UI(props) {
       </div>
 	  
 	  
-	  <div className="ui_item">
+	  {/*<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">verbose</legend>
         <div className="input">
@@ -132,9 +132,9 @@ function UI(props) {
           <p>The verbosity level of the optimizer.</p>
         </div>
       </fieldset>
-      </div>
+      </div>*/}
 	  
-	  <div className="ui_item">
+	  {/*<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">pre_dispatch</legend>
         <div className="input">
@@ -147,7 +147,7 @@ function UI(props) {
           </p>
         </div>
       </fieldset>
-      </div>
+      </div>*/}
 
 		
 	<div className="ui_item">

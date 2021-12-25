@@ -71,7 +71,7 @@ function LinearRegressionUI(props){
 		  </div>}
 	  
 	  
-	  <div className="ui_item">
+	  {/*<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">n_jobs</legend>
         <div className="input">
@@ -82,7 +82,7 @@ function LinearRegressionUI(props){
           <p>The number of CPU cores used for training.</p>
         </div>
       </fieldset>
-      </div>
+      </div>*/}
 
       {/*<div className="ui_item">
       <fieldset className="fieldset">
