@@ -91,7 +91,7 @@ export const events = {
     //var mode = document.querySelector('input[name="mode"]:checked').value;
     //var mode = events.toggle_choice;
 	var model = document.getElementById("selector_model").value;
-	var experimentId = document.getElementById("experiment_id").value;
+	var experimentName = document.getElementById("experiment_name").value;
 	
 	var selector = document.getElementById("selector_model");
 	
@@ -113,14 +113,14 @@ export const events = {
 	}
 	
 	if (selector.value == "logistic_regression"){
-		events.trainClassifier(file, gridSearchParams, model, experimentId);
+		events.trainClassifier(file, gridSearchParams, model, experimentName);
 	} else if (selector.value == "linear_regression"){
-		events.trainRegressor(file, gridSearchParams, model, experimentId);
+		events.trainRegressor(file, gridSearchParams, model, experimentName);
 	}
 	
   },  
   // Function for training TPOT
-  trainClassifier: function (file, gridSearchParams, model, experimentId) {
+  trainClassifier: function (file, gridSearchParams, model, experimentName) {
     
     
 	
@@ -154,7 +154,7 @@ export const events = {
 	
 	events.parseData(file, {penalty: penalty,					
 					model: model,
-					experiment_id: experimentId,
+					experiment_name: experimentName,
 					dual: dual,
 					tol: tol,
 					C: C,
@@ -169,7 +169,7 @@ export const events = {
 					l1_ratio: l1Ratio},
 					gridSearchParams);
   },
-  trainRegressor: function (file, gridSearchParams, model, experimentId){
+  trainRegressor: function (file, gridSearchParams, model, experimentName){
 	  var fitIntercept = events.checkedBoxes(document.getElementsByName("fit_intercept_lin"));
 	  var normalize = events.checkedBoxes(document.getElementsByName("normalize"));
 	  var copyX = events.checkedBoxes(document.getElementsByName("copy_X"));
@@ -178,7 +178,7 @@ export const events = {
 	  
 	  events.parseData(file, {fit_intercept: fitIntercept,					
 					model: model,
-					experiment_id: experimentId,
+					experiment_name: experimentName,
 					normalize: normalize,
 					copy_X: copyX,
 					positive: positive},
@@ -206,7 +206,7 @@ export const events = {
 	  console.log(payload)
 	  
 	  
-	  var trainButton = document.getElementById("train_button");
+	var trainButton = document.getElementById("train_button");
 	logArea = document.getElementById("log_area");
     downloadArea = document.getElementById("download");
     responseArea = document.getElementById("response");

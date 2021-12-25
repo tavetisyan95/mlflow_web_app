@@ -8,6 +8,7 @@ import LinearRegressionUI from "./linear_regression_UI.js"
 function UI(props) { 
   return (
     <div className="UI_wrapper">
+	
 	<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">Training data</legend>
@@ -19,14 +20,11 @@ function UI(props) {
           <p>The data that will be used for training</p>
         </div>
       </fieldset>
-      </div>  
-	 
-	  <div className="ui_item">
-      <button id="train_button" onClick={(event) => {events.trainModel()}}>Train</button> 
-      </div>
+      </div>  	 
 
 		<div className="ui_item">
-		<select id="selector_model" onChange={function(){
+		<div className="selector">
+		<select className="selector" id="selector_model" onChange={function(){
 			var selector = document.getElementById("selector_model");
 			
 			var log_reg_ui = document.getElementById("logistic_regression_UI");
@@ -50,15 +48,16 @@ function UI(props) {
 			<option value="svr">Support Vector Regressor</option> 
 		</select>
 		</div>
+		</div>
 
       <div className="ui_item">
       <fieldset className="fieldset">
-        <legend className="legend">experiment_id</legend>
+        <legend className="legend">experiment_name</legend>
         <div className="input">
-          <input id="experiment_id" type="text" defaultValue="0"></input>
+          <input id="experiment_name" type="text" defaultValue="name"></input>
         </div>
         <div className="description">
-          <p className="type">Integer, default: 0</p>
+          <p className="type">String, default: name</p>
           <p>
             The ID of the experiment that the run will be logged to.
           </p>
@@ -163,14 +162,18 @@ function UI(props) {
       </fieldset>
      </div>
 	  
-	
+	<div className="ui_item">
+      <button id="train_button" onClick={(event) => {events.trainModel()}}>Train</button> 
+      </div>
+		
       <div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">output</legend>
       <div hidden className="log" id="log_area"></div>
       </fieldset>
       </div>
-
+		
+		
       <div className="ui_item">
       <fieldset className="fieldset">
         <legend align="center" className="legend">

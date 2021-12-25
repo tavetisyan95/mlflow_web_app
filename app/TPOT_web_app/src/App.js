@@ -12,11 +12,9 @@ function App() {
 		<div className="App">
 			<p className="title">TPOT TRAINER</p>
 			<p className="subtitle">Select parameters for TPOT training.</p>			
-			
+			<p className="subtitle">Training params</p>
 			<UI/>		
-			<div/>
-			<div/>
-			<div/>
+			<p className="subtitle">Estimator hyperparameters</p>			
 			<LogisticRegressionUI/>
 			<LinearRegressionUI/>
 			<SVCUI/>

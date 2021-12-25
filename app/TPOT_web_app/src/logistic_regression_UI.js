@@ -197,7 +197,7 @@ function LogisticRegressionUI(props){
       </fieldset>
 	 </div>
 	
-	<div className="ui_item">
+	{/*<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">verbose</legend>
         <div className="input">
@@ -208,7 +208,7 @@ function LogisticRegressionUI(props){
           <p>The verbosity level of the optimizer.</p>
         </div>
       </fieldset>
-      </div>
+	</div>*/}
 	  
 	
 	
