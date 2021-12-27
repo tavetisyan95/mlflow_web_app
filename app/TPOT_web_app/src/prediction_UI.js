@@ -8,28 +8,26 @@ function PredictionUI(props) {
 	
 	<div className="ui_item">
       <fieldset className="fieldset">
-        <legend className="legend">Training data</legend>
+        <legend className="legend">Prediction data</legend>
         <div className="input">
-          <input type="file" id="data"></input>
+          <input type="file" id="prediction_data"></input>
         </div>
-        <button id="data_shown" onClick={(e) => {document.getElementById("data").click()}}>UPLOAD</button>
+        <button id="data_shown" onClick={(e) => {document.getElementById("prediction_data").click()}}>UPLOAD</button>
         <div className="description"><br></br>
-          <p>The data that will be used for training</p>
+          <p>The data that will be used for prediction</p>
         </div>
       </fieldset>
       </div>  	 
 
 		<div className="ui_item">
 		<div className="selector">
-		<select className="selector" id="selector_model" onChange={function(){
-			var selector = document.getElementById("selector_model");
+		<select className="selector" id="selector_id" onChange={function(){
+			var selector = document.getElementById("selector_id");
 			
 			var log_reg_ui = document.getElementById("logistic_regression_UI");
-			var lin_reg_ui = document.getElementById("linear_regression_UI");		
-			var svc_ui = document.getElementById("svc_UI");
-			var svr_ui = document.getElementById("svr_UI");								
+			var lin_reg_ui = document.getElementById("linear_regression_UI");									
 			
-			var uis = {"logistic_regression": log_reg_ui, "linear_regression": lin_reg_ui, "svc": svc_ui, "svr": svr_ui}
+			var uis = {"logistic_regression": log_reg_ui, "linear_regression": lin_reg_ui}
 					
 			for (var key in uis){
 				if (key == selector.value){
@@ -38,11 +36,10 @@ function PredictionUI(props) {
 					uis[key].hidden = true				
 				}				
 			}
+			
+			var newoption = new Option("Option text", "Option Value");
+			selector.add(newoption);
 			}}>
-			<option value="logistic_regression" selected="selected">Logistic Regression</option>
-			<option value="linear_regression">Linear Regression</option>  
-			<option value="svc">Support Vector Classifier</option> 
-			<option value="svr">Support Vector Regressor</option> 
 		</select>
 		</div>
 		</div>

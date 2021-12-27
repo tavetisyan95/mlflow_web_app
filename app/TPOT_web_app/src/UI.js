@@ -9,6 +9,8 @@ function UI(props) {
   return (
 	<div className="UI_wrapper">
 	
+		
+	
 	<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">Training data</legend>
@@ -21,18 +23,16 @@ function UI(props) {
         </div>
       </fieldset>
       </div>  	 
-
+			
 		<div className="ui_item">
 		<div className="selector">
 		<select className="selector" id="selector_model" onChange={function(){
 			var selector = document.getElementById("selector_model");
 			
 			var log_reg_ui = document.getElementById("logistic_regression_UI");
-			var lin_reg_ui = document.getElementById("linear_regression_UI");		
-			var svc_ui = document.getElementById("svc_UI");
-			var svr_ui = document.getElementById("svr_UI");								
+			var lin_reg_ui = document.getElementById("linear_regression_UI");								
 			
-			var uis = {"logistic_regression": log_reg_ui, "linear_regression": lin_reg_ui, "svc": svc_ui, "svr": svr_ui}
+			var uis = {"logistic_regression": log_reg_ui, "linear_regression": lin_reg_ui}
 					
 			for (var key in uis){
 				if (key == selector.value){
@@ -44,8 +44,6 @@ function UI(props) {
 			}}>
 			<option value="logistic_regression" selected="selected">Logistic Regression</option>
 			<option value="linear_regression">Linear Regression</option>  
-			<option value="svc">Support Vector Classifier</option> 
-			<option value="svr">Support Vector Regressor</option> 
 		</select>
 		</div>
 		</div>
@@ -162,16 +160,8 @@ function UI(props) {
       </fieldset>
      </div>
 	  
-	<div className="ui_item">
+	  <div className="ui_item">
       <button id="train_button" onClick={(event) => {events.trainModel()}}>Train</button> 
-      </div>
-	  
-	  <div className="ui_item">
-      <button id="deploy_button" onClick={(event) => {events.deployModel()}}>Deploy</button> 
-      </div>
-	  
-	  <div className="ui_item">
-      <button id="predict_button" onClick={(event) => {events.predict()}}>Predict</button> 
       </div>
 		
       <div className="ui_item">

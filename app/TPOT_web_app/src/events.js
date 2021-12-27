@@ -7,6 +7,65 @@ var responseArea;
 var logArea;
 
 export const events = {
+deployModel: function(){
+	var runID = document.getElementById("selector_id").value;
+	console.log(runID);
+	
+	fetch(
+            "http://" +
+              config.api_url +
+              ":" +
+              config.api_port +
+              "/" +
+              "deploy-model"
+				+ "?run_id="			  + encodeURI(runID)
+          )
+},
+predict: function(){
+	var file = document.getElementById("prediction_data").files[0];
+
+		try {
+		papa.parse(file, {
+			download: false,
+			header: true,
+			skipEmptyLines: true,
+			complete: function (results){				
+				
+				var payload = JSON.stringify({data: JSON.stringify(results.data)})			
+
+          // Sending a POST request to our Python API
+          fetch(
+            "http://" +
+              config.api_url +
+              ":" +
+              config.api_port +
+              "/" +
+              "deploy-model",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: payload,
+            }
+          )
+            .then((response) => response.json())
+			//.then((data) => (console.log(data)))
+            .then((data) => (console.log(data.Output))) // Showing the success message defined in the Python API
+            //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
+			//.then((data) => (idSelector.add(new Option(data.ID, data.ID))))			
+            ///.then(() => (trainButton.style.visibility = "visible")) // Making train button visible
+            //.then(() => clearInterval(interval)) // Clearing the interval that repeatedly checked logs
+            .catch((error) => {
+              console.error("Error", error);
+            });
+		  
+		}})} catch {
+      // Updating response message if papa.parse fails because a CSV dataset was not selected
+      responseArea.innerText =
+        "Dataset not selected. Please select a dataset for tuning.";
+    }
+},
   checkedVals: function(checkboxes){
 	 var checked = []
 	 for (var i=0; i < checkboxes.length; i++){
@@ -148,7 +207,7 @@ export const events = {
 	
 	var maxIter = JSON.stringify(document.getElementById("max_iter").value);
 	var multiClass = events.checkedVals(document.getElementsByName("multi_class"));
-	var verbose = JSON.stringify(document.getElementById("verbose").value);
+	//var verbose = JSON.stringify(document.getElementById("verbose").value);
 	var warmStart = events.checkedBoxes(document.getElementsByName("warm_start"));	
 	var l1Ratio = JSON.stringify(document.getElementById("l1_ratio").value);
 	
@@ -164,7 +223,7 @@ export const events = {
 					solver: solver,
 					max_iter: maxIter,
 					multi_class: multiClass,
-					verbose: verbose,
+					//verbose: verbose,
 					warm_start: warmStart,
 					l1_ratio: l1Ratio},
 					gridSearchParams);
@@ -207,6 +266,7 @@ export const events = {
 	  
 	  
 	var trainButton = document.getElementById("train_button");
+	var idSelector = document.getElementById("selector_id");
 	logArea = document.getElementById("log_area");
     downloadArea = document.getElementById("download");
     responseArea = document.getElementById("response");
@@ -253,8 +313,11 @@ export const events = {
             }
           )
             .then((response) => response.json())
-            .then((data) => (responseArea.innerText = data.Output)) // Showing the success message defined in the Python API
+			//.then((data) => (console.log(data)))
+            .then((data) => (responseArea.innerText = data.Output,
+			console.log(idSelector.add(new Option(data.ID, data.ID))))) // Showing the success message defined in the Python API
             //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
+			//.then((data) => (idSelector.add(new Option(data.ID, data.ID))))			
             .then(() => (trainButton.style.visibility = "visible")) // Making train button visible
             //.then(() => clearInterval(interval)) // Clearing the interval that repeatedly checked logs
             .catch((error) => {
