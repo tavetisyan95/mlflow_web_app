@@ -1,0 +1,15 @@
+artifact_uri: ./app/TPOT_web_app/mlruns/1/425e10b2e5374d5eb1911b6b74fc88e7/artifacts
+end_time: 1640599376866
+entry_point_name: ''
+experiment_id: '1'
+lifecycle_stage: active
+name: ''
+run_id: 425e10b2e5374d5eb1911b6b74fc88e7
+run_uuid: 425e10b2e5374d5eb1911b6b74fc88e7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1640599369182
+status: 3
+tags: []
+user_id: tigra

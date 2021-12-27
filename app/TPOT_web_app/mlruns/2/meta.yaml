@@ -1,0 +1,4 @@
+artifact_location: ./app/TPOT_web_app/mlruns/2
+experiment_id: '2'
+lifecycle_stage: active
+name: test
