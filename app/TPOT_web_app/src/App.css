@@ -10,6 +10,23 @@ p {
 	background: transparent;
 }
 
+select
+{
+    display: inline-block;
+    width: 150px;
+    height: 20px;
+    padding: 3px 6px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    line-height: 20px;
+    color: #555555;
+    vertical-align: middle;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+
 /* Dropdown Button */
 .dropbtn {
   background-color: #3498DB;

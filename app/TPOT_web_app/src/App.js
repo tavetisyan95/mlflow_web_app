@@ -12,7 +12,7 @@ function App() {
 		<div className="App">
 			<p className="title">TPOT TRAINER</p>
 			<p className="subtitle">Select parameters for TPOT training.</p>			
-			<p className="subtitle">Training params</p>
+			
 			
 			{<div className="ui_item">
 		<div className="selector">
@@ -40,6 +40,7 @@ function App() {
 			
 			
 			<div id="training_ui">
+			<p className="subtitle">Training params</p>
 			<UI/>		
 			<p className="subtitle">Estimator hyperparameters</p>			
 			<LogisticRegressionUI/>
