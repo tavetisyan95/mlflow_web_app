@@ -179,15 +179,7 @@ function UI(props) {
         </legend>
         <div className="text" id="response">
           Waiting for training to start...
-        </div>
-        <div hidden className="text" id="download">
-          <a
-            href={`http://${config.api_url}:${config.api_port}/static/script.py`}
-            download="script.py"
-          >
-            Download script
-          </a>
-        </div>
+        </div>        
       </fieldset>
       </div>
 	  

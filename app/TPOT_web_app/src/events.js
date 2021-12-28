@@ -5,6 +5,7 @@ import papa from "papaparse";
 var downloadArea;
 var responseArea;
 var logArea;
+var fileArea;
 
 export const events = {
 deployModel: function(){
@@ -23,6 +24,8 @@ deployModel: function(){
 },
 predict: function(){
 	var file = document.getElementById("prediction_data").files[0];
+	var predictionFileName = document.getElementById("prediction_name").value;
+	console.log(predictionFileName)
 
 		try {
 		papa.parse(file, {
@@ -31,7 +34,8 @@ predict: function(){
 			skipEmptyLines: true,
 			complete: function (results){				
 				
-				var payload = JSON.stringify({data: JSON.stringify(results.data)})			
+				var payload = JSON.stringify({data: JSON.stringify(results.data),
+				prediction_name: predictionFileName})			
 
           // Sending a POST request to our Python API
           fetch(
@@ -51,7 +55,15 @@ predict: function(){
           )
             .then((response) => response.json())
 			//.then((data) => (console.log(data)))
-            .then((data) => (console.log(data.Output))) // Showing the success message defined in the Python API
+            .then((data) => {console.log(data.Output);		;		  
+			var para = document.createElement("p");
+			var url = document.createElement("a");
+			url.href = "http://localhost:8080/" + data.prediction_name;
+			url.innerText = data.prediction_name
+			para.appendChild(url)
+		  
+			fileArea.appendChild(para);
+			localStorage.setItem(data.prediction_name, data.prediction_name)}) // Showing the success message defined in the Python API
             //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
 			//.then((data) => (idSelector.add(new Option(data.ID, data.ID))))			
             ///.then(() => (trainButton.style.visibility = "visible")) // Making train button visible
@@ -115,12 +127,29 @@ predict: function(){
     await fetch("http://localhost:8080/logs.txt")
       .then((response) => response.text())
       .then((response) => (logArea.innerText = response));
+	  
+	var values = [],
+	keys = Object.keys(localStorage),
+	i = keys.length
+	
+	fileArea = document.getElementById("prediction_files")
+	
+	while (i--){
+		//console.log(localStorage.getItem(keys[i]));
+		var para = document.createElement("p");
+			var url = document.createElement("a");
+			url.href = "http://localhost:8080/" + localStorage.getItem(keys[i]);
+			url.innerText = localStorage.getItem(keys[i])
+			para.appendChild(url)
+		  
+			fileArea.appendChild(para)
+	}
 
     // Behavior while not training. Intended to execute only upon page load or refresh
     if (training == false) {
       // Trying to fetch the TPOT pipeline script
       var response = await fetch(
-        "http://localhost:8080/script.py"
+        "http://localhost:8080/predictions.csv"
       );
 
       // Obtaining fetch status code

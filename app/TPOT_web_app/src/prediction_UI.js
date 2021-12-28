@@ -12,12 +12,27 @@ function PredictionUI(props) {
         <div className="input">
           <input type="file" id="prediction_data"></input>
         </div>
-        <button id="data_shown" onClick={(e) => {document.getElementById("prediction_data").click()}}>UPLOAD</button>
+        <button id="prediction_data_shown" onClick={(e) => {document.getElementById("prediction_data").click()}}>UPLOAD</button>
         <div className="description"><br></br>
           <p>The data that will be used for prediction</p>
         </div>
       </fieldset>
-      </div>  	 
+      </div>
+
+		<div className="ui_item">
+      <fieldset className="fieldset">
+        <legend className="legend">Prediction file name</legend>
+        <div className="input">
+          <input id="prediction_name" type="text" defaultValue="name.csv"></input>
+        </div>
+        <div className="description">
+          <p className="type">String, default: name</p>
+          <p>
+            The ID of the experiment that the run will be logged to.
+          </p>
+        </div>
+      </fieldset>
+      </div> 
 
 		<div className="ui_item">
 		<div className="selector">
@@ -129,7 +144,7 @@ function PredictionUI(props) {
         </div>
         <div hidden className="text" id="download">
           <a
-            href={`http://${config.api_url}:${config.api_port}/static/script.py`}
+            href={"http://localhost:8080/predictions.csv"}
             download="script.py"
           >
             Download script
@@ -138,6 +153,30 @@ function PredictionUI(props) {
       </fieldset>
       </div>
 	  
+	  <div className="ui_item">
+      <fieldset className="fieldset">
+        <legend align="center" className="legend">
+          Saved predictions
+        </legend>
+        <div className="text" id="prediction_files">          
+        </div>
+        
+      </fieldset>
+      </div>
+	  
+	  {/*<div className="ui_item">
+      <button id="add_button" onClick={(event) => {
+		  var fileArea = document.getElementById("prediction_files");
+		  
+		  var para = document.createElement("p");
+		  var url = document.createElement("a");
+		  url.href = "somelink";
+		  url.innerText = "Text"
+		  para.appendChild(url)
+		  
+		  fileArea.appendChild(para);
+	  }}>Add</button> 
+      </div>*/}
       
     </div>
   );

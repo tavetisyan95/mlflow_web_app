@@ -10,8 +10,8 @@ import {events} from "./events.js"
 function App() {
 	return (
 		<div className="App">
-			<p className="title">TPOT TRAINER</p>
-			<p className="subtitle">Select parameters for TPOT training.</p>			
+			<p className="title">MLflow TRAINER</p>
+			<p className="subtitle">Select parameters for MLflow training.</p>			
 			
 			
 			{<div className="ui_item">
