@@ -10,6 +10,8 @@ var fileArea;
 export const events = {
 deployModel: function(){
 	var runID = document.getElementById("selector_id").value;
+	var experimentNameInference = document.getElementById("selector_experiment").value;
+	
 	console.log(runID);
 	
 	fetch(
@@ -19,7 +21,8 @@ deployModel: function(){
               config.api_port +
               "/" +
               "deploy-model"
-				+ "?run_id="			  + encodeURI(runID)
+				+ "?run_id="			  + encodeURI(runID) +
+				 "&experiment_name_inference=" + encodeURI(experimentNameInference)
           )
 },
 predict: function(){
@@ -63,7 +66,22 @@ predict: function(){
 			para.appendChild(url)
 		  
 			fileArea.appendChild(para);
-			localStorage.setItem(data.prediction_name, data.prediction_name)}) // Showing the success message defined in the Python API
+			
+			if (localStorage.getItem("prediction_file_names") == null){
+				localStorage.setItem("prediction_file_names", JSON.stringify([data.prediction_name]));
+			} else {
+				var predictionFileNames = JSON.parse(localStorage.getItem("prediction_file_names"));
+				console.log(predictionFileNames)
+				predictionFileNames.push(data.prediction_name);				
+				localStorage.setItem("prediction_file_names", JSON.stringify(predictionFileNames));
+			}
+			
+
+			
+			
+			
+			//localStorage.setItem(data.prediction_name, data.prediction_name)
+			}) // Showing the success message defined in the Python API
             //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
 			//.then((data) => (idSelector.add(new Option(data.ID, data.ID))))			
             ///.then(() => (trainButton.style.visibility = "visible")) // Making train button visible
@@ -127,10 +145,69 @@ predict: function(){
     await fetch("http://localhost:8080/logs.txt")
       .then((response) => response.text())
       .then((response) => (logArea.innerText = response));
-	  
-	var values = [],
+	
+	/*localStorage.setItem("TestKey", JSON.stringify(["TestValue"]));
+	var arr = JSON.parse(localStorage.getItem("TestKey"));
+	arr.push("TestValue")
+	console.log(arr);
+	//console.log(JSON.parse(localStorage.getItem("TestKey")).push("Test Value"))
+	localStorage.setItem("TestKey", JSON.stringify(arr));
+	console.log(JSON.parse(localStorage.getItem("TestKey")));*/
+	
+	fileArea = document.getElementById("prediction_files")
+	
+	if (localStorage.getItem("prediction_file_names") !== null){
+	
+	var predictionFileNames = JSON.parse(localStorage.getItem("prediction_file_names"));
+	
+	console.log(predictionFileNames);
+	
+	for (var i=0; i < predictionFileNames.length; i++){
+		console.log(predictionFileNames[i]);
+		var para = document.createElement("p");
+			var url = document.createElement("a");
+			url.href = "http://localhost:8080/" + predictionFileNames[i];
+			url.innerText = predictionFileNames[i];
+			para.appendChild(url);
+		  
+			fileArea.appendChild(para);
+	}}
+	
+	
+	var idSelector = document.getElementById("selector_id");
+	
+	
+	if (localStorage.getItem("model_ids") !== null){
+	
+	var modelIDs = JSON.parse(localStorage.getItem("model_ids"));
+	
+	console.log(modelIDs);
+	
+	for (var i=0; i < modelIDs.length; i++){
+		console.log(modelIDs[i]);
+		idSelector.add(new Option(modelIDs[i], modelIDs[i]))
+	}}
+	
+	
+	if (localStorage.getItem("experiment_names") !== null){
+	var experimentSelector = document.getElementById("selector_experiment");
+	
+	var experimentNames = JSON.parse(localStorage.getItem("experiment_names"));
+	
+	console.log(!experimentNames.includes("name"));
+	
+	console.log(experimentNames);
+	
+	for (var i=0; i < experimentNames.length; i++){
+		console.log(experimentNames[i]);
+		experimentSelector.add(new Option(experimentNames[i], experimentNames[i]))
+	}}
+	
+	/*var values = [],
 	keys = Object.keys(localStorage),
-	i = keys.length
+	i = keys.length	
+	
+	console.log(keys)
 	
 	fileArea = document.getElementById("prediction_files")
 	
@@ -143,7 +220,7 @@ predict: function(){
 			para.appendChild(url)
 		  
 			fileArea.appendChild(para)
-	}
+	}*/
 
     // Behavior while not training. Intended to execute only upon page load or refresh
     if (training == false) {
@@ -296,6 +373,7 @@ predict: function(){
 	  
 	var trainButton = document.getElementById("train_button");
 	var idSelector = document.getElementById("selector_id");
+	var experimentSelector = document.getElementById("selector_experiment");
 	logArea = document.getElementById("log_area");
     downloadArea = document.getElementById("download");
     responseArea = document.getElementById("response");
@@ -343,8 +421,31 @@ predict: function(){
           )
             .then((response) => response.json())
 			//.then((data) => (console.log(data)))
-            .then((data) => (responseArea.innerText = data.Output,
-			console.log(idSelector.add(new Option(data.ID, data.ID))))) // Showing the success message defined in the Python API
+            .then((data) => {responseArea.innerText = data.Output;
+			idSelector.add(new Option(data.ID, data.ID));
+			if (localStorage.getItem("model_ids") == null){
+				localStorage.setItem("model_ids", JSON.stringify([data.ID]));
+			} else {
+				var modelIDs = JSON.parse(localStorage.getItem("model_ids"));
+				console.log(modelIDs)
+				modelIDs.push(data.ID);				
+				localStorage.setItem("model_ids", JSON.stringify(modelIDs));
+			}					
+			
+			if (localStorage.getItem("experiment_names") == null){
+				localStorage.setItem("experiment_names", JSON.stringify([data.experiment_name]));
+				experimentSelector.add(new Option(data.experiment_name));
+			} else {
+				var experimentNames = JSON.parse(localStorage.getItem("experiment_names"));
+				console.log(experimentNames)
+				if (!experimentNames.includes(data.experiment_name)){
+					experimentNames.push(data.experiment_name);			
+					experimentSelector.add(new Option(data.experiment_name));					
+				localStorage.setItem("experiment_names", JSON.stringify(experimentNames));
+				}				
+			}
+			
+			}) // Showing the success message defined in the Python API
             //.then(() => (downloadArea.hidden = false)) // Showing download link for the pipeline script
 			//.then((data) => (idSelector.add(new Option(data.ID, data.ID))))			
             .then(() => (trainButton.style.visibility = "visible")) // Making train button visible

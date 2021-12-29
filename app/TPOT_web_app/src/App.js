@@ -13,7 +13,7 @@ function App() {
 			<p className="title">MLflow TRAINER</p>
 			<p className="subtitle">Select parameters for MLflow training.</p>			
 			
-			
+			{/*localStorage.clear()*/}
 			{<div className="ui_item">
 		<div className="selector">
 		<select className="selector" id="selector_mode" onChange={function(){

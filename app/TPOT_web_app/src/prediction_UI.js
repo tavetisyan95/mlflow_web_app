@@ -18,7 +18,9 @@ function PredictionUI(props) {
         </div>
       </fieldset>
       </div>
-
+		
+		
+		
 		<div className="ui_item">
       <fieldset className="fieldset">
         <legend className="legend">Prediction file name</legend>
@@ -36,8 +38,17 @@ function PredictionUI(props) {
 
 		<div className="ui_item">
 		<div className="selector">
+		<select className="selector" id="selector_experiment" onChange={function(){
+			
+			}}>
+		</select>
+		</div>
+		</div>
+
+		<div className="ui_item">
+		<div className="selector">
 		<select className="selector" id="selector_id" onChange={function(){
-			var selector = document.getElementById("selector_id");
+			/*var selector = document.getElementById("selector_id");
 			
 			var log_reg_ui = document.getElementById("logistic_regression_UI");
 			var lin_reg_ui = document.getElementById("linear_regression_UI");									
@@ -51,10 +62,7 @@ function PredictionUI(props) {
 					uis[key].hidden = true				
 				}				
 			}
-			
-			var newoption = new Option("Option text", "Option Value");
-			selector.add(newoption);
-			}}>
+			*/}}>
 		</select>
 		</div>
 		</div>
