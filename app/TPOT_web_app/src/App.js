@@ -11,10 +11,15 @@ function App() {
 	return (
 		<div className="App">
 			<p className="title">MLflow TRAINER</p>
-			<p className="subtitle">Select parameters for MLflow training.</p>			
+			<p className="subtitle">Select parameters for MLflow training.</p>
+
+			<div className="ui_item">
+      <button id="clear_button" onClick={(event) => {events.clearAll()}}>Clear All Data</button> 
+      </div>
 			
-			{/*localStorage.clear()*/}
 			{<div className="ui_item">
+			<fieldset className="fieldset">
+		<legend className="legend">Mode</legend>
 		<div className="selector">
 		<select className="selector" id="selector_mode" onChange={function(){
 			var selector = document.getElementById("selector_mode");
@@ -36,6 +41,7 @@ function App() {
 			<option value="prediction_ui">Prediction</option>  
 		</select>
 		</div>
+		</fieldset>
 			</div>}
 			
 			

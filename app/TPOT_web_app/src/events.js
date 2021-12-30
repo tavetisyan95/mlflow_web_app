@@ -25,11 +25,18 @@ deployModel: function(){
 				 "&experiment_name_inference=" + encodeURI(experimentNameInference)
           )
 },
+clearAll: function(){
+	localStorage.clear()
+},
 predict: function(){
 	var file = document.getElementById("prediction_data").files[0];
 	var predictionFileName = document.getElementById("prediction_name").value;
+	var responseAreaInference = document.getElementById("response_inference");
 	console.log(predictionFileName)
-
+	
+	responseAreaInference.innerText = "Running inference...";
+	
+	
 		try {
 		papa.parse(file, {
 			download: false,
@@ -58,22 +65,34 @@ predict: function(){
           )
             .then((response) => response.json())
 			//.then((data) => (console.log(data)))
-            .then((data) => {console.log(data.Output);		;		  
-			var para = document.createElement("p");
-			var url = document.createElement("a");
-			url.href = "http://localhost:8080/" + data.prediction_name;
-			url.innerText = data.prediction_name
-			para.appendChild(url)
-		  
-			fileArea.appendChild(para);
+            .then((data) => {responseAreaInference.innerText = data.Output;
+			
 			
 			if (localStorage.getItem("prediction_file_names") == null){
 				localStorage.setItem("prediction_file_names", JSON.stringify([data.prediction_name]));
+				var para = document.createElement("p");
+				var url = document.createElement("a");
+				url.href = "http://localhost:8080/" + data.prediction_name;
+				url.innerText = data.prediction_name
+				para.appendChild(url)
+		  
+			fileArea.appendChild(para);
 			} else {
 				var predictionFileNames = JSON.parse(localStorage.getItem("prediction_file_names"));
 				console.log(predictionFileNames)
-				predictionFileNames.push(data.prediction_name);				
-				localStorage.setItem("prediction_file_names", JSON.stringify(predictionFileNames));
+				if (!predictionFileNames.includes(data.prediction_name)){
+					var para = document.createElement("p");
+				var url = document.createElement("a");
+				url.href = "http://localhost:8080/" + data.prediction_name;
+				url.innerText = data.prediction_name
+				para.appendChild(url)
+				
+				fileArea.appendChild(para);
+					predictionFileNames.push(data.prediction_name);
+					localStorage.setItem("prediction_file_names", JSON.stringify(predictionFileNames));
+				
+				}				
+				//localStorage.setItem("prediction_file_names", JSON.stringify(predictionFileNames));
 			}
 			
 
@@ -144,7 +163,7 @@ predict: function(){
 		*/
     await fetch("http://localhost:8080/logs.txt")
       .then((response) => response.text())
-      .then((response) => (logArea.innerText = response));
+      //.then((response) => (logArea.innerText = response));
 	
 	/*localStorage.setItem("TestKey", JSON.stringify(["TestValue"]));
 	var arr = JSON.parse(localStorage.getItem("TestKey"));
@@ -174,21 +193,6 @@ predict: function(){
 	}}
 	
 	
-	var idSelector = document.getElementById("selector_id");
-	
-	
-	if (localStorage.getItem("model_ids") !== null){
-	
-	var modelIDs = JSON.parse(localStorage.getItem("model_ids"));
-	
-	console.log(modelIDs);
-	
-	for (var i=0; i < modelIDs.length; i++){
-		console.log(modelIDs[i]);
-		idSelector.add(new Option(modelIDs[i], modelIDs[i]))
-	}}
-	
-	
 	if (localStorage.getItem("experiment_names") !== null){
 	var experimentSelector = document.getElementById("selector_experiment");
 	
@@ -201,7 +205,23 @@ predict: function(){
 	for (var i=0; i < experimentNames.length; i++){
 		console.log(experimentNames[i]);
 		experimentSelector.add(new Option(experimentNames[i], experimentNames[i]))
+		
+		
+	}
+	
+	var idSelector = document.getElementById("selector_id");
+	
+	
+		// Showing the model IDs for the first saved experiment
+		var modelIDs = JSON.parse(localStorage.getItem(experimentNames[0]));
+	
+		for (var i=0; i < modelIDs.length; i++){
+			console.log(modelIDs[i]);
+			idSelector.add(new Option(modelIDs[i], modelIDs[i]))
+	
 	}}
+
+	
 	
 	/*var values = [],
 	keys = Object.keys(localStorage),
@@ -236,18 +256,18 @@ predict: function(){
 
       // If the script exists, showing download link and update status message
       if (noScript == false) {
-        downloadArea.hidden = false;
+        //downloadArea.hidden = false;
         responseArea.innerText =
           "Previously completed training, script available";
 
         // If the logs are empty, hiding the log area and only show download link
-        if (logArea.innerText != "") {
+        /*if (logArea.innerText != "") {
           logArea.hidden = false;
-        }
+        }*/
       }
     }
     // Scrolling to the bottom of the training logs
-    logArea.scrollTop = logArea.scrollHeight;
+    //logArea.scrollTop = logArea.scrollHeight;
   },
   trainModel: function()
   {
@@ -423,13 +443,16 @@ predict: function(){
 			//.then((data) => (console.log(data)))
             .then((data) => {responseArea.innerText = data.Output;
 			idSelector.add(new Option(data.ID, data.ID));
-			if (localStorage.getItem("model_ids") == null){
-				localStorage.setItem("model_ids", JSON.stringify([data.ID]));
+			
+			if ((localStorage.getItem(data.experiment_name)) == null){
+				//console.log(data.experiment_name);
+				localStorage.setItem(data.experiment_name, JSON.stringify([data.ID]));
 			} else {
-				var modelIDs = JSON.parse(localStorage.getItem("model_ids"));
+				var modelIDs = JSON.parse(localStorage.getItem(data.experiment_name));
 				console.log(modelIDs)
 				modelIDs.push(data.ID);				
-				localStorage.setItem("model_ids", JSON.stringify(modelIDs));
+				console.log(modelIDs)
+				localStorage.setItem(data.experiment_name, JSON.stringify(modelIDs));
 			}					
 			
 			if (localStorage.getItem("experiment_names") == null){
@@ -442,7 +465,9 @@ predict: function(){
 					experimentNames.push(data.experiment_name);			
 					experimentSelector.add(new Option(data.experiment_name));					
 				localStorage.setItem("experiment_names", JSON.stringify(experimentNames));
-				}				
+				}
+				
+				
 			}
 			
 			}) // Showing the success message defined in the Python API

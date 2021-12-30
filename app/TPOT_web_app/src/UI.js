@@ -25,6 +25,8 @@ function UI(props) {
       </div>  	 
 			
 		<div className="ui_item">
+		<fieldset className="fieldset">
+		<legend className="legend">Estimator</legend>
 		<div className="selector">
 		<select className="selector" id="selector_model" onChange={function(){
 			var selector = document.getElementById("selector_model");
@@ -45,7 +47,7 @@ function UI(props) {
 			<option value="logistic_regression" selected="selected">Logistic Regression</option>
 			<option value="linear_regression">Linear Regression</option>  
 		</select>
-		</div>
+		</div>	</fieldset>
 		</div>
 
       <div className="ui_item">
@@ -163,13 +165,7 @@ function UI(props) {
 	  <div className="ui_item">
       <button id="train_button" onClick={(event) => {events.trainModel()}}>Train</button> 
       </div>
-		
-      <div className="ui_item">
-      <fieldset className="fieldset">
-        <legend className="legend">output</legend>
-      <div hidden className="log" id="log_area"></div>
-      </fieldset>
-      </div>
+	
 		
 		
       <div className="ui_item">

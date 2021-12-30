@@ -37,15 +37,34 @@ function PredictionUI(props) {
       </div> 
 
 		<div className="ui_item">
+		<fieldset className="fieldset">
+		<legend className="legend">Experiment name</legend>
 		<div className="selector">
 		<select className="selector" id="selector_experiment" onChange={function(){
-			
+				var selectorID = document.getElementById("selector_id");
+				var selectorExperiment = document.getElementById("selector_experiment")
+				
+				
+				
+				var modelIDs = JSON.parse(localStorage.getItem(selectorExperiment.value));
+				
+				selectorID.innerHTML = "";
+				
+				console.log(modelIDs)
+				console.log(modelIDs[0])
+				
+				for (var i=0; i < modelIDs.length; i++){
+					selectorID.add(new Option(modelIDs[i], modelIDs[i]))
+				}
 			}}>
 		</select>
 		</div>
+		</fieldset>
 		</div>
 
 		<div className="ui_item">
+		<fieldset className="fieldset">
+		<legend className="legend">Run ID</legend>
 		<div className="selector">
 		<select className="selector" id="selector_id" onChange={function(){
 			/*var selector = document.getElementById("selector_id");
@@ -65,6 +84,7 @@ function PredictionUI(props) {
 			*/}}>
 		</select>
 		</div>
+		</fieldset>
 		</div>
 	  
 	  {/*<div className="ui_item">
@@ -133,30 +153,15 @@ function PredictionUI(props) {
 	  <div className="ui_item">
       <button id="predict_button" onClick={(event) => {events.predict()}}>Predict</button> 
       </div>
-		
-      <div className="ui_item">
-      <fieldset className="fieldset">
-        <legend className="legend">output</legend>
-      <div hidden className="log" id="log_area"></div>
-      </fieldset>
-      </div>
-		
+
 		
       <div className="ui_item">
       <fieldset className="fieldset">
         <legend align="center" className="legend">
           RESPONSE
         </legend>
-        <div className="text" id="response">
-          Waiting for training to start...
-        </div>
-        <div hidden className="text" id="download">
-          <a
-            href={"http://localhost:8080/predictions.csv"}
-            download="script.py"
-          >
-            Download script
-          </a>
+        <div className="text" id="response_inference">
+          Waiting for inference to start...
         </div>
       </fieldset>
       </div>
@@ -166,7 +171,7 @@ function PredictionUI(props) {
         <legend align="center" className="legend">
           Saved predictions
         </legend>
-        <div className="text" id="prediction_files">          
+        <div className="log" id="prediction_files">          
         </div>
         
       </fieldset>
