@@ -163,7 +163,7 @@ function UI(props) {
      </div>
 	  
 	  <div className="ui_item">
-      <button id="train_button" onClick={(event) => {events.trainModel()}}>Train</button> 
+      <button id="train_button" onClick={(event) => {events.handleParams()}}>Train Grid Search</button> 
       </div>
 	
 		

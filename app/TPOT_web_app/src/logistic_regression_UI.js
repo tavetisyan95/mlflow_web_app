@@ -119,19 +119,6 @@ function LogisticRegressionUI(props){
       </fieldset>
 	</div>
 	
-	<div className="ui_item" >
-      <fieldset className="fieldset">
-        <legend className="legend">class_weight</legend>
-        <div className="input">
-          <input id="class_weight" type="text" defaultValue="1.0"></input>
-        </div>
-        <div className="description">
-          <p className="type">Float, default: None</p>
-          <p>Pending explanation</p>
-        </div>
-      </fieldset>
-	</div>
-	
 	
 	<div className="ui_item" >
       <fieldset className="fieldset">
