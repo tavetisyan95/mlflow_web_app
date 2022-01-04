@@ -250,10 +250,10 @@ class DeployModel(Resource):
         experiment_id = mlflow.get_experiment_by_name(id_args["experiment_name_inference"]).experiment_id
         
         # Loading the model under the current experiment and under the specified ID and saving it in the app's config file
-        app.config['model'] = mlflow.pyfunc.load_model(f"mlruns/{experiment_id}/{id_args['run_id']}/artifacts/best_estimator")
+        app.config['model'] = mlflow.pyfunc.load_model(f"./app/MLflow_web_app/mlruns/{experiment_id}/{id_args['run_id']}/artifacts/best_estimator")
         
         # Returning an OK code
-        return 200
+        return {"Output": "Model deployed!"}, 200
         
     def post(self):
         """
@@ -267,7 +267,7 @@ class DeployModel(Resource):
         df = pd.io.json.read_json(inference_args["data"])  
                    
         # Running inference on the model and saving the predictions    
-        pd.DataFrame(app.config['model'].predict(df)).to_csv(inference_args["prediction_name"])
+        pd.DataFrame(app.config['model'].predict(df)).to_csv("./app/MLflow_web_app/predictions/" + inference_args["prediction_name"])
         
         # Returning an OK message
         return {"Output": "Inference Complete!", "prediction_name": inference_args["prediction_name"]}, 200

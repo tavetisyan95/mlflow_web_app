@@ -121,7 +121,6 @@ export const events = {
 			}
 		}
 	 
-	 console.log(checkedStates);
 	 return checkedStates	
 	},	
 	// Function for handling params for grid search cv training
@@ -383,6 +382,9 @@ export const events = {
 		// Obtaining the name of the experiment selected for inference
 		var experimentNameInference = document.getElementById("selector_experiment").value;	
 		
+		// Obtaining the response area for inference
+		var responseAreaInference = document.getElementById("response_inference");			
+		
 		// Sending a GET request to deploy the model under the
 		// selected experiment and run ID
 		fetch(
@@ -395,6 +397,8 @@ export const events = {
 			+ "?run_id=" + encodeURI(runID) +
 			"&experiment_name_inference=" + encodeURI(experimentNameInference)
 			  )
+		.then((response) => response.json())
+		.then((response) => {responseAreaInference.innerText = response.Output})
 	},
 	// Function for running inference
 	predict: function(){
@@ -402,10 +406,10 @@ export const events = {
 		var file = document.getElementById("prediction_data").files[0];
 		
 		// Obtaining the name for the file that predictions will be saved to
-		var predictionFileName = document.getElementById("prediction_name").value;
+		var predictionFileName = document.getElementById("prediction_name").value;			
 		
 		// Obtaining the response area for inference
-		var responseAreaInference = document.getElementById("response_inference");
+		var responseAreaInference = document.getElementById("response_inference");	
 		
 		// Changing the response area text to indicate
 		// that inference is running
