@@ -1,13 +1,8 @@
 flask
 flask_restful
 flask_cors
-tpot
+mlflow
 scikit-learn
-deap
-update_checker
-tqdm
-stopit
-xgboost
 dask
 dask_ml
 numpy
