@@ -16,7 +16,8 @@ function TrainingUI(props) {
 						<input type="file" id="data"></input>
 					</div>
 					<button id="data_shown" onClick={(e) => {document.getElementById("data").click()}}>UPLOAD</button>
-					<div className="description"><br></br>
+					<div className="description">
+						<br></br>
 						<p>The data that will be used for training.</p>
 					</div>
 				</fieldset>
@@ -27,35 +28,36 @@ function TrainingUI(props) {
 				<fieldset className="fieldset">
 					<legend className="legend">Estimator</legend>					
 					<br></br>
-					<div className="selector">					
-						<select className="selector" id="selector_model" onChange={function(){
-								// Getting the model selector
-								var selector = document.getElementById("selector_model");
-					
-								// Getting the UIs associated with each of the available models
-								var log_reg_ui = document.getElementById("logistic_regression_UI");
-								var lin_reg_ui = document.getElementById("linear_regression_UI");								
-					
-								// Creating a dictionary with our UI objects
-								var uis = {"logistic_regression": log_reg_ui, "linear_regression": lin_reg_ui}
 								
-								
-								// Iterating over the elements in the dict,
-								// checking which one is selected,
-								// and show/hide the corresponding UIs
-								for (var key in uis){
-									if (key == selector.value){
-										uis[key].hidden = false
-									} else {
-										uis[key].hidden = true				
-									}				
-								}
-								}}>
-							<option value="logistic_regression" selected="selected">Logistic Regression</option>
-							<option value="linear_regression">Linear Regression</option>  
-						</select>
-					</div>
+					<select id="selector_model" onChange={function(){
+							// Getting the model selector
+							var selector = document.getElementById("selector_model");
+					
+							// Getting the UIs associated with each of the available models
+							var log_reg_ui = document.getElementById("logistic_regression_UI");
+							var lin_reg_ui = document.getElementById("linear_regression_UI");								
+					
+							// Creating a dictionary with our UI objects
+							var uis = {"logistic_regression": log_reg_ui, "linear_regression": lin_reg_ui}
+							
+							
+							// Iterating over the elements in the dict,
+							// checking which one is selected,
+							// and showing/hiding the corresponding UIs
+							for (var key in uis){
+								if (key == selector.value){
+									uis[key].hidden = false
+								} else {
+									uis[key].hidden = true				
+								}				
+							}
+							}}>
+						<option value="logistic_regression" selected="selected">Logistic Regression</option>
+						<option value="linear_regression">Linear Regression</option>  
+					</select>
+					
 					<div className="description">
+						<br></br>
 						<p>The scikit-learn estimator that you want to train.</p>
 					</div>
 				</fieldset>
@@ -70,6 +72,7 @@ function TrainingUI(props) {
 					</div>
 					<div className="description">
 						<p className="type">String, default: Experiment</p>
+						<br></br>
 						<p>The name of the MLflow experiment that the run will be logged to.</p>
 					</div>
 				</fieldset>
@@ -84,6 +87,7 @@ function TrainingUI(props) {
 					</div>
 					<div className="description">
 						<p className="type">Integer or None, default: None</p>
+						<br></br>
 						<p>The number of CPU cores that will be used during training.</p>
 					</div>
 				</fieldset>
@@ -98,6 +102,7 @@ function TrainingUI(props) {
 					</div>
 					<div className="description">
 						<p className="type">Integer, default: 5</p>
+						<br></br>
 						<p>The number of cross-validation folds for grid search.</p>
 					</div>
 				</fieldset>
@@ -112,6 +117,7 @@ function TrainingUI(props) {
 					</div>
 					<div className="description">
 						<p className="type">Bool, default: False</p>
+						<br></br>
 						<p>If False, the <i>cv_results_</i> attribute will not include training scores.</p>
 					</div>
 				</fieldset>

@@ -27,6 +27,7 @@ function PredictionUI(props) {
 				</div>
 				<div className="description">
 					<p className="type">String, default: results.csv</p>
+					<br></br>
 					<p>The name of the file that predictions will be saved to.</p>
 				</div>
 			</fieldset>
@@ -36,25 +37,27 @@ function PredictionUI(props) {
 			<fieldset className="fieldset">
 				<legend className="legend">Experiment name</legend>
 				<br></br>
-				<div className="selector">
-					<select className="selector" id="selector_experiment" onChange={function(){
-							// Getting selector objects for
-							// run IDs and experiments
-							var selectorID = document.getElementById("selector_id");
-							var selectorExperiment = document.getElementById("selector_experiment")							
-							
-							// Obtaining the run IDs under the selected experiment
-							var runIDs = JSON.parse(localStorage.getItem(selectorExperiment.value));
-							
-							// Emptying the HTML contents of the run ID selector
-							selectorID.innerHTML = "";
-					
-							// Inserting existing run IDs into the selector
-							for (var i=0; i < runIDs.length; i++){
-								selectorID.add(new Option(runIDs[i], runIDs[i]))
-							}}}>
-					</select>
-				</div>
+				
+				<select id="selector_experiment" onChange={function(){
+						// Getting selector objects for
+						// run IDs and experiments
+						var selectorID = document.getElementById("selector_id");
+						var selectorExperiment = document.getElementById("selector_experiment")							
+						
+						console.log(selectorExperiment.value);
+						
+						// Obtaining the run IDs under the selected experiment
+						var runIDs = JSON.parse(sessionStorage.getItem(selectorExperiment.value));												
+						
+						// Emptying the HTML contents of the run ID selector
+						selectorID.innerHTML = "";
+				
+						// Inserting existing run IDs into the selector
+						for (var i=0; i < runIDs.length; i++){
+							selectorID.add(new Option(runIDs[i], runIDs[i]))
+						}}}>
+				</select>
+				
 				<div className="description">
 						<p>The experiment under which the desired model was saved.</p>
 				</div>
@@ -65,9 +68,9 @@ function PredictionUI(props) {
 			<fieldset className="fieldset">
 			<legend className="legend">Run ID</legend>
 				<br></br>
-				<div className="selector">
-					<select className="selector" id="selector_id"></select>
-				</div>
+				
+				<select id="selector_id"></select>
+				
 				<div className="description">
 						<p>The run ID under which the desired model was saved.</p>
 				</div>
@@ -95,7 +98,7 @@ function PredictionUI(props) {
 	  
 		<div className="ui_item">
 			<fieldset className="fieldset">
-				<legend align="center" className="legend">Saved predictions</legend>
+				<legend align="center" className="legend">Saved prediction files</legend>
 				<div className="log" id="prediction_file_names"></div>        
 			</fieldset>
 		</div>	        

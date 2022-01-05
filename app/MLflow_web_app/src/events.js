@@ -79,7 +79,9 @@ export const events = {
 		var url = document.createElement("a");
 	
 		// Assigning the URL of the current file with predictions
-		url.href = "http://localhost:8080/" + fileName;
+		//url.href = "http://localhost:8080/predictions/" + fileName;
+		
+		url.href = "http://" +	config.api_url + ":" + config.http_server_port + "/predictions/" + fileName;
 								
 		// Displaying the name of the prediction file
 		url.innerText = fileName;
@@ -347,7 +349,7 @@ export const events = {
 					} else {
 						// Getting existing experiment names, if they do exist
 						var experimentNames = JSON.parse(sessionStorage.getItem("experiment_names"));
-						
+
 						// Checking if the current experiment name already exists
 						if (!experimentNames.includes(response.experiment_name)){
 							// Adding the experiment name to existing names, 

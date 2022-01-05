@@ -5,8 +5,9 @@ import LinearRegressionUI from "./linear_regression_UI.js"
 
 function LogisticRegressionUI(props){
 	return (
-		<div id="logistic_regression_UI">
-			<div className="UI_wrapper">
+		<div id="logistic_regression_UI">			
+			<div className="UI_wrapper">								
+			
 				<div className="ui_item">
 					<fieldset className="fieldset">
 						<legend className="legend">penalty</legend>
@@ -23,7 +24,7 @@ function LogisticRegressionUI(props){
 							<br></br>
 							<p>The penalty norm used.</p>
 							<p>You can select one or more norm.</p>
-							<p>At least one must be checked.</p>
+							<p>At least one must be selected.</p>
 						</div>
 					</fieldset>
 				</div>
@@ -41,7 +42,7 @@ function LogisticRegressionUI(props){
 							<br></br>
 							<p>Whether to use dual or primal formulation.</p>
 							<p>You can select either or both.</p>
-							<p>At least one must be checked.</p>
+							<p>At least one must be selected.</p>
 						</div>
 					</fieldset>
 				 </div>
@@ -56,7 +57,7 @@ function LogisticRegressionUI(props){
 						<div className="description">
 							<p className="type">Float, default: 1e-4</p>
 							<br></br>
-							<p>Tolerance for stopping criteria</p>
+							<p>Tolerance for stopping criteria.</p>
 							<p>Multiple values can be entered.</p>
 							<p>Separate each value with a comma, e.g. <i>"1e-4, 1e-3, ..."</i></p>
 						</div>
@@ -93,7 +94,7 @@ function LogisticRegressionUI(props){
 							<br></br>
 							<p>Specifies if a constant (a.k.a. bias or intercept) should be added to the decision function.</p>
 							<p>You can select either or both.</p>
-							<p>At least one must be checked.</p>
+							<p>At least one must be selected.</p>
 						</div>
 					</fieldset>
 				</div>
@@ -110,7 +111,7 @@ function LogisticRegressionUI(props){
 							<br></br>
 							<p>If solver <i>liblinear</i> is used and <i>fit_intercept</i> is set to True, 
 							a "synthetic feature" equal to <i>intercept_scaling</i> is appended to the instance vector 
-							<i>[x, intercept_scaling]</i></p>	
+							<i>([x, intercept_scaling])</i></p>	
 							<p>Multiple values can be entered.</p>
 							<p>Separate each value with a comma, e.g. <i>"1.0, 1.5, ..."</i></p>							
 						</div>
@@ -125,10 +126,10 @@ function LogisticRegressionUI(props){
 							<input id="random_state" type="text" defaultValue="None"></input>
 						</div>
 						<div className="description">
-							<p className="type">Float, default: 1.0</p>
+							<p className="type">Integer or None, default: None</p>
 							<br></br>
 							<p>Used as a seed when solver == ‘sag’, ‘saga’ or ‘liblinear’ to shuffle the data.</p>
-							<p>A single number is expected</p>
+							<p>A single number is expected.</p>
 						</div>
 					</fieldset>
 				</div>
@@ -152,7 +153,7 @@ function LogisticRegressionUI(props){
 							<br></br>							
 							<p>Algorithm to use for optimization.</p>
 							<p>You can select one or more solver.</p>
-							<p>At least one must be checked.</p>
+							<p>At least one must be selected.</p>
 						</div>
 					</fieldset>
 				</div>
@@ -189,7 +190,7 @@ function LogisticRegressionUI(props){
 							<br></br>
 							<p>Whether to handle labels as binary or multi-class</p>
 							<p>You can select one or more option.</p>
-							<p>At least one must be checked.</p>
+							<p>At least one must be selected.</p>
 						</div>
 					</fieldset>
 				</div>	
@@ -207,7 +208,7 @@ function LogisticRegressionUI(props){
 							<br></br>
 							<p>Whether to reuse the previous trained estimator.</p>
 							<p>You can select either or both.</p>
-							<p>At least one must be checked.</p>
+							<p>At least one must be selected.</p>
 						</div>
 					</fieldset>
 				 </div>

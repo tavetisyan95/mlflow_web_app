@@ -1,7 +1,8 @@
 pip install -r api/requirements.txt
 python api/mlflow_api.py &
 cd app/MLflow_web_app
-mlflow ui -p 4000 &
+mlflow ui -p $1 &
+start http://localhost:$1/
 npx http-server ./ --cors -c-1 -s &
 npm install papaparse
 npx yarn install
