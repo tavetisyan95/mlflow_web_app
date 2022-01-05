@@ -119,7 +119,8 @@ While training is in progress, you will see the message `Training` under `RESPON
 
 ![Image](images/training-complete.jpg)
 
-Training logs should start appearing above the button area.
+You should now be able to see logged runs in the MLflow UI.
+
 
 ## Doing inference with trained models
 
