@@ -7,7 +7,7 @@ Clone the project:
 
 ## Set the `api_url`
 
-In the directory `app/TPOT_web_app/src/` inside `config.js`, edit the API URL, if necessary:
+In the directory `app/MLflow_web_app/src/` inside `config.js`, edit the API URL, if necessary:
 
 ```
 export const config = {
@@ -26,15 +26,16 @@ NOTE: If you want to use different ports for the Flask API or http-server, set t
 ## Install Dependencies and Start Web Servers
 
 Run the following in terminal:
+
 `bash start.sh 4000`
 
 `4000` indicates the port that the MLflow UI will be run on. This UI is separate from our app and is a product of the MLflow team.
 
 You may enter another port number if you wish, except for 3000, 5000, and 8080. These are used by our React app, the Flask web server, and http-server respectively.
 
-NOTE: Make sure that ports 3000, 4000, 5000, and 8080 are publicly available (otherwise you may run into CORs issues).
+NOTE: Make sure that ports 3000, 4000, 5000, and 8080 are publicly available and unused by other processes. If not, either free them up or use other ports.
 
-The app and the MLflow UI should launch in your web browser. If it doesn't, navigate to http://localhost:3000 (for our app) and http://localhost:4000 (for the MLflow UI).
+The app and the MLflow UI should launch in your web browser. If they don't, navigate to http://localhost:3000 (for our app) and http://localhost:4000 (for the MLflow UI).
 
 The app will have been fully launched once its webpage opens in the browser.
 
@@ -62,7 +63,7 @@ Click on the `UPLOAD` button to select a training dataset.
 
 ![Image](images/choose-file.jpg)
 
-You can find two CSVs for training in the root directory of the project - `dataset_classification_training.csv` and `dataset_classification_training.csv`. They are intended for classification and regression respectively.
+You can find two CSVs for training in the root directory of the project - `dataset_classification_training.csv` and `dataset_regression_training.csv`. They are intended for classification and regression respectively.
 
 The app expects datasets in a CSV file with a column header. The label column should be named "Target". Feature column names can be anything.
 
@@ -100,6 +101,7 @@ Our app implements the following parameters of scikit-learn's `GridSearchCV`:
 - `cv`. The number of cross-validation folds.
 - `return_train_score`. Whether or not training scores should be tracked.
 
+The default values of these parameters work - no need to change them.
 
 ### 5. Selecting estimator hyperparameters
 
@@ -131,12 +133,12 @@ To do inference with the trained models, scroll to the top of the app and select
 To start inferece, do the following:
 
 1. Click the `UPLOAD` button and upload a dataset to do predictions with. You can find two test CSV datasets in the root directory of the repo - `dataset_classification_prediction.csv` and `dataset_regression_prediction.csv`
-2. Enter the name of the file that predictions will be saved to. The app is intended to save predictions to CSV files, but other formats might work as well.
-3. Select the experiment under which the desired model has been saved.
+2. Enter the name of the file that predictions should be saved to. The app is intended to save predictions to CSV files, but other formats might work as well.
+3. Select the experiment under which the desired model has been saved. Once you select an experiment, you will see run IDs that were logged under it.
 4. Select the run ID of the desired model. 
 
 
-Then, click `Deploy` - this will load the best estimator trained logged under the selected experiment and run ID. Note that if you will be re-using the same model for predictions, there's no need to deploy it every time before inference. But if you want to use another model, you will need to select its ID and deploy it.
+Then, click `Deploy` - this will load the best estimator trained logged under the selected experiment and run ID. Note that if you will be re-using the same model for predictions, there's no need to re-deploy it every time before inference. But if you want to use another model, you will need to select its ID and deploy it.
 
 Once this is done, click `Predict`. Once prediction is complete, you will see the name of the CSV file with predictions under `Saved prediction files`.
 
@@ -153,8 +155,8 @@ If you terminate the app from the terminal, all saved prediction files and MLflo
 In its current implementation, the app has some notable limitations, including:
 
 - No error messages pop up on the webpage if something goes wrong. The only source of information about errors is the app's terminal.
-- Not all parameters of `LogisticRegression` and `LinearRegression` have been included in the app.
-- Page refreshes are not handled at all.
+- Invalid inputs for hyperparameters aren't handled. No error messages are shown in the web browser. The only way to know that something has gone wrong is through terminal logs.
+- Not all parameters of `LogisticRegression` and `LinearRegression` have been implemented in the app.
 
 ## Starting in Docker
 ```docker-compose -f docker-compose.yaml up -d --build```
