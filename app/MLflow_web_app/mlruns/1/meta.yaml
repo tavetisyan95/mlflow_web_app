@@ -1,4 +1,0 @@
-artifact_location: ./app/MLflow_web_app/mlruns/1
-experiment_id: '1'
-lifecycle_stage: active
-name: Experiment

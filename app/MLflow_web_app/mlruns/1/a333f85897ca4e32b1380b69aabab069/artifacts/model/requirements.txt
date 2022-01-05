@@ -1,6 +1,0 @@
-mlflow
-cloudpickle==2.0.0
-flask-restful==0.3.9
-psutil==5.8.0
-python-dotenv==0.19.2
-scikit-learn==1.0.1
