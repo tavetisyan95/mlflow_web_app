@@ -92,6 +92,24 @@ export const events = {
 		// Appending the paragraph to the file name box
 		fileArea.appendChild(para);
 	},
+	// Function for updating run ID selector after training
+	updateIDSelector: function(){
+		// Getting selector objects for
+		// run IDs and experiments
+		var selectorID = document.getElementById("selector_id");
+		var selectorExperiment = document.getElementById("selector_experiment")						
+						
+		// Obtaining the run IDs under the selected experiment
+		var runIDs = JSON.parse(sessionStorage.getItem(selectorExperiment.value));												
+						
+		// Emptying the HTML contents of the run ID selector
+		selectorID.innerHTML = "";
+				
+		// Inserting existing run IDs into the selector
+		for (var i=0; i < runIDs.length; i++){
+			selectorID.add(new Option(runIDs[i], runIDs[i]))
+		}
+	},
 	// Function for getting the VALUES of selected checkboxes
 	getCheckedCheckboxVals: function(checkboxes){
 		// Creating variable to store checkbox values		
@@ -306,7 +324,7 @@ export const events = {
 						":" +
 						config.api_port +
 						"/" +
-						config.api_endpoint,
+						config.api_training_endpoint,
 						{
 							method: "POST",
 							headers: {
@@ -318,10 +336,7 @@ export const events = {
 				.then((response) => response.json()) // Obtaining the response from the API				
 				.then((response) => {
 					// Displaying the success message for inference
-					responseAreaTraining.innerText = response.Output;
-					
-					// Adding the parent run ID to the ID selector (necessary for inference)
-					idSelector.add(new Option(response.ID, response.ID));
+					responseAreaTraining.innerText = response.Output;										
 				
 					// Checking if the name of the current experiment exists in sessionStorage
 					if ((sessionStorage.getItem(response.experiment_name)) == null){
@@ -363,7 +378,14 @@ export const events = {
 							sessionStorage.setItem("experiment_names", JSON.stringify(experimentNames));
 						}							
 					}
-			
+					
+					// Checking if the currently selected experiment in the prediction UI is
+					// the same as the experiment that this run was logged to
+					if (experimentSelector.value == response.experiment_name){
+						// Adding the parent run ID to the ID selector (necessary for inference)
+						idSelector.add(new Option(response.ID, response.ID));
+					}
+					
 					}) 
 				.then(() => (trainButton.style.visibility = "visible")) // Making train button visible  
 				// Handling HTTP request errors				
@@ -395,7 +417,7 @@ export const events = {
 			":" +
 			config.api_port +
 			"/" +
-			"deploy-model"
+			config.api_inference_endpoint
 			+ "?run_id=" + encodeURI(runID) +
 			"&experiment_name_inference=" + encodeURI(experimentNameInference)
 			  )
@@ -426,8 +448,8 @@ export const events = {
 				skipEmptyLines: true,
 				complete: function (results){
 					// Creating payload with the data and to send with a POST request
-					var payload = JSON.stringify({data: JSON.stringify(results.data),
-					prediction_name: predictionFileName})			
+					var payload = JSON.stringify({data_inference: JSON.stringify(results.data),
+					prediction_file_name: predictionFileName})			
 
 					// Sending a POST request for inference
 					fetch(
@@ -436,7 +458,7 @@ export const events = {
 						":" +
 						config.api_port +
 						"/" +
-						"deploy-model",
+						config.api_inference_endpoint,
 						{
 							method: "POST",
 							headers: {
@@ -456,24 +478,24 @@ export const events = {
 						if (sessionStorage.getItem("prediction_file_names") == null){
 							// If prediction file names don't exist, getting the file
 							// name that was returned with the request and save it
-							sessionStorage.setItem("prediction_file_names", JSON.stringify([response.prediction_name]));
+							sessionStorage.setItem("prediction_file_names", JSON.stringify([response.prediction_file_name]));
 							
 							// Adding the file name to the UI box for file names
-							events.addFileName(response.prediction_name);
+							events.addFileName(response.prediction_file_name);
 						} else {
 							// If prediction names exist, getting and parsing them
 							var predictionFileNames = JSON.parse(sessionStorage.getItem("prediction_file_names"));
 							
 							// Checking if the name of the current prediction file already exists
-							if (!predictionFileNames.includes(response.prediction_name)){
+							if (!predictionFileNames.includes(response.prediction_file_name)){
 								// Saving and adding the prediction file name to the
 								// file area if the file name doesn't exist
 								
 								// Adding the file name to the UI box for file names
-								events.addFileName(response.prediction_name);						
+								events.addFileName(response.prediction_file_name);						
 								
 								// Adding the file name to our existing list of file names
-								predictionFileNames.push(response.prediction_name);
+								predictionFileNames.push(response.prediction_file_name);
 								
 								// Saving the updated file names in local storage
 								sessionStorage.setItem("prediction_file_names", JSON.stringify(predictionFileNames));

@@ -42,9 +42,7 @@ function PredictionUI(props) {
 						// Getting selector objects for
 						// run IDs and experiments
 						var selectorID = document.getElementById("selector_id");
-						var selectorExperiment = document.getElementById("selector_experiment")							
-						
-						console.log(selectorExperiment.value);
+						var selectorExperiment = document.getElementById("selector_experiment")						
 						
 						// Obtaining the run IDs under the selected experiment
 						var runIDs = JSON.parse(sessionStorage.getItem(selectorExperiment.value));												
