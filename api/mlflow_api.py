@@ -5,17 +5,15 @@ from flask_cors import CORS
 import mlflow
 from sklearn import datasets
 from sklearn.linear_model import LogisticRegression, LinearRegression
-from sklearn.svm import SVC, SVR
-from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.model_selection import GridSearchCV
 import pandas as pd
 import numpy as np
 import json
-from parsers import  data_parser, gridsearch_parser, classification_parser, regression_parser, inference_parser, id_parser
+from parsers import data_parser, gridsearch_parser, classification_parser, regression_parser, deployment_parser, inference_parser
 
 
+# Setting our tracking URI
 mlflow.set_tracking_uri("./app/MLflow_web_app/mlruns")
-
-print(mlflow.get_tracking_uri)
 
 
 # Setting up a Flask application
@@ -32,7 +30,7 @@ class TrackExperiment(Resource):
                 
         """
         
-        # Parsing arguments
+        # PARSING ARGUMENTS
         
         # Data arguments
         data_args = data_parser.parse_args()
@@ -234,7 +232,6 @@ class TrackExperiment(Resource):
         return run_id
 
 
-
 # Class for endpoint deploy-model
 class DeployModel(Resource):
     def get(self):
@@ -243,17 +240,17 @@ class DeployModel(Resource):
         """
         
         # Parsing ID arguments
-        id_args = id_parser.parse_args()        
+        deployment_args = deployment_parser.parse_args()        
         
         # Setting the experiment and obtaining its ID
-        mlflow.set_experiment(id_args["experiment_name_inference"])
-        experiment_id = mlflow.get_experiment_by_name(id_args["experiment_name_inference"]).experiment_id
+        mlflow.set_experiment(deployment_args["experiment_name_inference"])
+        experiment_id = mlflow.get_experiment_by_name(deployment_args["experiment_name_inference"]).experiment_id
         
         # Loading the model under the current experiment and under the specified ID and saving it in the app's config file
-        app.config['model'] = mlflow.pyfunc.load_model(f"./app/MLflow_web_app/mlruns/{experiment_id}/{id_args['run_id']}/artifacts/best_estimator")
+        app.config['model'] = mlflow.pyfunc.load_model(f"./app/MLflow_web_app/mlruns/{experiment_id}/{deployment_args['run_id']}/artifacts/best_estimator")
         
-        # Returning an OK code
-        return {"Output": "Model deployed!"}, 200
+        # Returning an OK message
+        return {"Output": "Model Deployed!"}, 200
         
     def post(self):
         """
@@ -264,13 +261,13 @@ class DeployModel(Resource):
         inference_args = inference_parser.parse_args()
         
         # Parsing the JSON dataset into a pandas DataFrame
-        df = pd.io.json.read_json(inference_args["data"])  
+        df = pd.io.json.read_json(inference_args["data_inference"])  
                    
         # Running inference on the model and saving the predictions    
-        pd.DataFrame(app.config['model'].predict(df)).to_csv("./app/MLflow_web_app/predictions/" + inference_args["prediction_name"])
+        pd.DataFrame(app.config['model'].predict(df)).to_csv(inference_args["prediction_file_name"])
         
         # Returning an OK message
-        return {"Output": "Inference Complete!", "prediction_name": inference_args["prediction_name"]}, 200
+        return {"Output": "Inference Complete!", "prediction_file_name": inference_args["prediction_file_name"]}, 200
 
 
 # Adding the endpoints to our app
@@ -281,3 +278,4 @@ api.add_resource(DeployModel, "/deploy-model")
 # launching our app
 if __name__ == "__main__":
     app.run()
+
