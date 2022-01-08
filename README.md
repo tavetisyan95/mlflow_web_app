@@ -51,14 +51,24 @@ Before you can do inference, you need to run scikit-learn's grid search algorith
 
 To start training, you need to:
 
-1. Select a training dataset.
-2. Select the desired estimator.
+1. Select the desired estimator.
+2. Select a training dataset.
 3. Enter an experiment name to log the models under.
 4. Select grid search parameters.
 5. Select estimator hyperparameters for grid search to try.
 
+### 1. Selecting an estimator
 
-### 1. Selecting a training dataset setting grid search parameters
+Our app implements two scikit-learn estimators:
+
+- `sklearn.linear_model.LogisticRegression`.
+- `sklearn.linear_model.LinearRegression`.
+
+Use the dropdown list under `Estimator` to select the desired algorithm:
+
+![Image](images/choose-estimator.jpg)
+
+### 2. Selecting a training dataset setting grid search parameters
 
 Click on the `UPLOAD` button to select a training dataset.
 
@@ -75,18 +85,6 @@ Note that there should be no column for indices in the CSV file. The app doesn't
 When using pandas, you would get the correct CSV structure by using a statement like this:
 
 `dataset_df.to_csv("dataset.csv", index=False)`
-
-### 2. Selecting an estimator
-
-Our app implements two scikit-learn estimators:
-
-- `sklearn.linear_model.LogisticRegression`.
-- `sklearn.linear_model.LinearRegression`.
-
-Use the dropdown list under `Estimator` to select the desired algorithm:
-
-![Image](images/choose-estimator.jpg)
-
 
 ### 3. Entering an experiment name
 
