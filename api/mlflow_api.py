@@ -264,7 +264,7 @@ class DeployModel(Resource):
         df = pd.io.json.read_json(inference_args["data_inference"])  
                    
         # Running inference on the model and saving the predictions    
-        pd.DataFrame(app.config['model'].predict(df)).to_csv(inference_args["prediction_file_name"])
+        pd.DataFrame(app.config['model'].predict(df)).to_csv("./app/MLflow_web_app/predictions/" + inference_args["prediction_file_name"])
         
         # Returning an OK message
         return {"Output": "Inference Complete!", "prediction_file_name": inference_args["prediction_file_name"]}, 200
