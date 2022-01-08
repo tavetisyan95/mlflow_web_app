@@ -7,23 +7,8 @@ import LinearRegressionUI from "./linear_regression_UI.js"
 
 function TrainingUI(props) { 
 	return (
-		<div className="UI_wrapper">	
-		
-			<div className="ui_item">
-				<fieldset className="fieldset">
-					<legend className="legend">Training data</legend>
-					<div className="input">
-						<input type="file" id="data"></input>
-					</div>
-					<button id="data_shown" onClick={(e) => {document.getElementById("data").click()}}>UPLOAD</button>
-					<div className="description">
-						<br></br>
-						<p>The data that will be used for training.</p>
-					</div>
-				</fieldset>
-			</div>  	 
-				
-				
+		<div className="UI_wrapper">
+
 			<div className="ui_item">
 				<fieldset className="fieldset">
 					<legend className="legend">Estimator</legend>					
@@ -62,6 +47,20 @@ function TrainingUI(props) {
 					</div>
 				</fieldset>
 			</div>
+		
+			<div className="ui_item">
+				<fieldset className="fieldset">
+					<legend className="legend">Training data</legend>
+					<div className="input">
+						<input type="file" id="data"></input>
+					</div>
+					<button id="data_shown" onClick={(e) => {document.getElementById("data").click()}}>UPLOAD</button>
+					<div className="description">
+						<br></br>
+						<p>The data that will be used for training.</p>
+					</div>
+				</fieldset>
+			</div>  	 		
 
 
 			<div className="ui_item">
