@@ -1,6 +1,12 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[4]:
+
+
 # Importing dependencies
 from flask import Flask
-from flask_restful import Resource, Api
+from flask_restful import Resource, Api, reqparse
 from flask_cors import CORS
 import mlflow
 from sklearn import datasets
@@ -12,8 +18,14 @@ import json
 from parsers import data_parser, gridsearch_parser, classification_parser, regression_parser, deployment_parser, inference_parser
 
 
+# In[5]:
+
+
 # Setting our tracking URI
-mlflow.set_tracking_uri("./app/MLflow_web_app/mlruns")
+mlflow.set_tracking_uri(uri="./app/MLflow_web_app/mlruns")
+
+
+# In[6]:
 
 
 # Setting up a Flask application
@@ -43,7 +55,7 @@ class TrackExperiment(Resource):
         numeric_int_args = ["cv", "n_jobs"]        
        
         # Processing numeric args for grid search
-        gridsearch_args = self.process_args(args=gridsearch_args,
+        gridsearch_args = self.process_numeric_args(args=gridsearch_args,
                                             numeric_int_args=numeric_int_args)
         
         # Checking which model type was submitted to the endpoint
@@ -60,7 +72,7 @@ class TrackExperiment(Resource):
             numeric_int_args = ["random_state", "max_iter"]
             
             # Processing numeric args for LogisticRegression
-            config_args = self.process_args(args=config_args, 
+            config_args = self.process_numeric_args(args=config_args, 
                                             numeric_float_args=numeric_float_args, 
                                             numeric_int_args=numeric_int_args)           
             
@@ -88,18 +100,21 @@ class TrackExperiment(Resource):
         
         # Training grid search and obtaining the 
         # ID of the run under which the best estimator is stored.
-        run_id = self.train_gridsearch(estimator, 
-                                       data_args["data"], 
-                                       config_args, 
-                                       gridsearch_args, 
-                                       data_args["experiment_name"])
+        run_id = self.train_gridsearch(estimator=estimator, 
+                                       data=data_args["data"], 
+                                       config_args=config_args, 
+                                       gridsearch_args=gridsearch_args, 
+                                       experiment_name=data_args["experiment_name"])
         
         # Returning an OK message
         return {"Output": "Training complete!", 
                 "ID": run_id, 
                 "experiment_name": data_args["experiment_name"]}, 200
     
-    def process_args(self, args, numeric_float_args=[], numeric_int_args=[]):
+    def process_numeric_args(self, 
+                     args, 
+                     numeric_float_args=[], 
+                     numeric_int_args=[]):
         """
         Convert string arguments to their proper numeric form.
         
@@ -130,11 +145,11 @@ class TrackExperiment(Resource):
         
         # Processing float arguments
         for arg in numeric_float_args:
-            # Parsing float arguments as a single string
-            args[arg] = json.loads(args[arg][0])
+            # Parsing float arguments as a single string            
+            args[arg] = json.loads(s=args[arg][0])                       
             
             # Breaking the parsed string up into string numbers
-            args[arg] = args[arg].split(",")  
+            args[arg] = args[arg].split(sep=",")  
             
             # Iterating over the string numbers
             for i, value in enumerate(args[arg]):
@@ -149,10 +164,10 @@ class TrackExperiment(Resource):
         # Processing int arguments
         for arg in numeric_int_args:
             # Parsing int arguments as a single string
-            args[arg] = json.loads(args[arg][0])
+            args[arg] = json.loads(s=args[arg][0])
             
              # Breaking the parsed string up into string numbers
-            args[arg] = args[arg].split(",")
+            args[arg] = args[arg].split(sep=",")
             
             # Iterating over the string numbers
             for i, value in enumerate(args[arg]):
@@ -167,7 +182,12 @@ class TrackExperiment(Resource):
         # Returning processed arguments
         return args
     
-    def train_gridsearch(self, estimator, data, config_args, gridsearch_args, experiment_name):
+    def train_gridsearch(self, 
+                         estimator, 
+                         data, 
+                         config_args, 
+                         gridsearch_args, 
+                         experiment_name):
         """
         Run the scikit-learn grid search algorithm on estimator.
         Return the run ID of the best estimator trained.
@@ -208,10 +228,12 @@ class TrackExperiment(Resource):
         mlflow.sklearn.autolog(max_tuning_runs=None)
 
         # Instantiating scikit-learn's grid search algorithm with parsed hyperparameters
-        grid_search = GridSearchCV(estimator=estimator, param_grid=config_args, **gridsearch_args)       
+        grid_search = GridSearchCV(estimator=estimator, 
+                                   param_grid=config_args, 
+                                   **gridsearch_args)       
         
         # Parsing the JSON dataset into a pandas DataFrame
-        df = pd.io.json.read_json(data)  
+        df = pd.io.json.read_json(path_or_buf=data)  
         
         # Processing features and labels in the DataFrame dataset
         features = df.drop(["target"], axis=1).to_numpy().astype(np.float64)
@@ -223,13 +245,17 @@ class TrackExperiment(Resource):
             run_id = run.info.run_id
             
             # Fitting GridSearchCV
-            grid_search.fit(X=features, y=labels)        
+            grid_search.fit(X=features, 
+                            y=labels)        
 
         # Disabling autologging
         mlflow.sklearn.autolog(disable=True)
         
         # Returning the run ID of the parent run
         return run_id
+
+
+# In[14]:
 
 
 # Class for endpoint deploy-model
@@ -243,11 +269,11 @@ class DeployModel(Resource):
         deployment_args = deployment_parser.parse_args()        
         
         # Setting the experiment and obtaining its ID
-        mlflow.set_experiment(deployment_args["experiment_name_inference"])
-        experiment_id = mlflow.get_experiment_by_name(deployment_args["experiment_name_inference"]).experiment_id
+        mlflow.set_experiment(experiment_name=deployment_args["experiment_name_inference"])
+        experiment_id = mlflow.get_experiment_by_name(name=deployment_args["experiment_name_inference"]).experiment_id
         
         # Loading the model under the current experiment and under the specified ID and saving it in the app's config file
-        app.config['model'] = mlflow.pyfunc.load_model(f"./app/MLflow_web_app/mlruns/{experiment_id}/{deployment_args['run_id']}/artifacts/best_estimator")
+        app.config['model'] = mlflow.pyfunc.load_model(model_uri=f"./app/MLflow_web_app/mlruns/{experiment_id}/{deployment_args['run_id']}/artifacts/best_estimator")
         
         # Returning an OK message
         return {"Output": "Model Deployed!"}, 200
@@ -261,13 +287,16 @@ class DeployModel(Resource):
         inference_args = inference_parser.parse_args()
         
         # Parsing the JSON dataset into a pandas DataFrame
-        df = pd.io.json.read_json(inference_args["data_inference"])  
+        df = pd.io.json.read_json(path_or_buf=inference_args["data_inference"])  
                    
         # Running inference on the model and saving the predictions    
-        pd.DataFrame(app.config['model'].predict(df)).to_csv("./app/MLflow_web_app/predictions/" + inference_args["prediction_file_name"])
+        pd.DataFrame(data=app.config['model'].predict(df)).to_csv("./app/MLflow_web_app/predictions/" + inference_args["prediction_file_name"])
         
         # Returning an OK message
         return {"Output": "Inference Complete!", "prediction_file_name": inference_args["prediction_file_name"]}, 200
+
+
+# In[15]:
 
 
 # Adding the endpoints to our app
@@ -275,7 +304,16 @@ api.add_resource(TrackExperiment, "/track-experiment")
 api.add_resource(DeployModel, "/deploy-model")
 
 
+# In[16]:
+
+
 # launching our app
 if __name__ == "__main__":
     app.run()
+
+
+# In[ ]:
+
+
+
 
