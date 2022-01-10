@@ -1,5 +1,4 @@
 import "./App.css";
-import {config} from "./config.js";
 import {events} from "./events.js";
 
 function PredictionUI(props) { 

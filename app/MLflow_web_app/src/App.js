@@ -4,8 +4,6 @@ import PredictionUI from "./prediction_UI.js";
 import LogisticRegressionUI from "./logistic_regression_UI.js"
 import LinearRegressionUI from "./linear_regression_UI.js"
 
-import {events} from "./events.js"
-
 
 function App() {
 	return (

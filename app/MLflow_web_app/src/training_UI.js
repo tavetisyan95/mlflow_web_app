@@ -1,9 +1,5 @@
 import "./App.css";
-import {config} from "./config.js";
 import {events} from "./events.js";
-
-import LogisticRegressionUI from "./logistic_regression_UI.js"
-import LinearRegressionUI from "./linear_regression_UI.js"
 
 function TrainingUI(props) { 
 	return (

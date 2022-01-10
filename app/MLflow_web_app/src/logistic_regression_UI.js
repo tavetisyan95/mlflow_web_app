@@ -1,7 +1,4 @@
 import "./App.css";
-import {config} from "./config.js";
-import {events} from "./events.js";
-import LinearRegressionUI from "./linear_regression_UI.js"
 
 function LogisticRegressionUI(props){
 	return (
