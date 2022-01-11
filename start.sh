@@ -8,7 +8,7 @@ npm install papaparse
 npx yarn install
 npx yarn start
 if [ -d $"mlruns" ]; then rm -r mlruns; fi
-rm predictions/*
+rm predictions/*.csv
 npx kill-port 3000
 npx kill-port 4000
 npx kill-port 5000
