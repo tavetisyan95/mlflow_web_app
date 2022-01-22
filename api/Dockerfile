@@ -8,7 +8,8 @@ ENV STATIC_URL /static
 ENV STATIC_PATH /app/static
 
 WORKDIR /app
-COPY api.py .
+COPY mlflow_api.py .
+COPY parsers.py .
 
 RUN mkdir static
 

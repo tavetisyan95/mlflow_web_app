@@ -2,8 +2,8 @@ FROM node:14.17.4-alpine
 
 WORKDIR /app
 
-COPY ./app/TPOT_web_app/package.json .
-COPY ./app/TPOT_web_app/package-lock.json .
+COPY ./app/MLflow_web_app/package.json .
+COPY ./app/MLflow_web_app/package-lock.json .
 
 ARG NODE_ENV
 RUN if [ "$NODE_ENV" = "production" ]; \
@@ -11,7 +11,7 @@ RUN if [ "$NODE_ENV" = "production" ]; \
     else npm install; \
     fi;
 
-COPY ./app/TPOT_web_app ./
+COPY ./app/MLflow_web_app ./
 
 EXPOSE 3000
 
