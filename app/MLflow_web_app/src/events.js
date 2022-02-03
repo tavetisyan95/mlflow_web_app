@@ -1,6 +1,5 @@
 import { config } from "./config.js";
 import papa from "papaparse";
-import axios from "axios";
 
 // Variable for a UI box that will display the names of existing CSV files
 // that contain predictions
@@ -8,39 +7,6 @@ var fileArea;
 
 export const events = {
   // Function for loading global UI elements
-  
-  
-  uploadFiles: function()
-  {
-	  var file = document.getElementById("model_arch").files[0];
-	  /*const formData = new FormData();
-	  formData.append('model_weights', file);
-	  
-	  axios.defaults.headers.post['Content-Type'] = "application/json";
-	  
-	  axios.post("http://localhost:5000/post/", formData)
-	  .then(res => res.json())
-	  .then(res => console.log(res))
-	  .catch(function (error) {
-		  console.log(error.response);
-	  });*/
-	  
-	  
-	  const formData = new FormData();
-	  formData.append('item', file);
-	  
-	  axios.defaults.headers.post['Content-Type'] = "application/json";
-	  
-	  console.log(formData);
-	  
-	  axios.post("http://localhost:5000/post_test/", formData)
-	  .then(res => res.json())
-	  .then(res => console.log(res))
-	  .catch(function (error) {
-		  console.log(error.response);
-	  });
-	  
-  },
   loadUI: async function () {
     // Waiting for 1 second to allow UI elements to load
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));

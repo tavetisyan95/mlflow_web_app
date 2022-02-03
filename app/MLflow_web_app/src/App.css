@@ -15,10 +15,6 @@ select
 
 }
 
-html {
-	position: relative;
-}
-
 
 /* Dropdown Button */
 .dropbtn {
@@ -108,9 +104,8 @@ input[type=range]:focus::-webkit-slider-runnable-track {
 	grid-template-columns: 1fr 1fr;
 	gap: 10px;
 	width: 100vw;
-	{/*height: 100vh;*/}
+	height: 100vh;
 	background: transparent;
-	position: relative;
 }
 
 .ui_item {
