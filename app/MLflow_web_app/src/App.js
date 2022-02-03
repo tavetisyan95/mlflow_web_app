@@ -1,8 +1,9 @@
 import "./App.css";
 import TrainingUI from "./training_UI.js";
 import PredictionUI from "./prediction_UI.js";
-import LogisticRegressionUI from "./logistic_regression_UI.js"
-import LinearRegressionUI from "./linear_regression_UI.js"
+import QuickshiftUI from "./quickshift_UI.js"
+import FelzenszwalbUI from "./felzenszwalb_UI.js"
+import SlicUI from "./slic_UI.js"
 
 
 function App() {
@@ -55,10 +56,11 @@ function App() {
 				<p className="subtitle">MLFLOW AND GRID SEARCH PARAMETERS</p>
 				<p className="description">In this section, select your training data, the desired estimator, and tweak grid search parameters.</p>
 				<TrainingUI/>		
-				<p className="subtitle">ESTIMATOR HYPERPARAMETERS</p>			
-				<p className="description">In this section, tweak estimator hyperparameters.</p>
-				<LogisticRegressionUI/>
-				<LinearRegressionUI/>
+				{/*<p className="subtitle">ESTIMATOR HYPERPARAMETERS</p>			
+				<p className="description">In this section, tweak estimator hyperparameters.</p>*/}
+				{<QuickshiftUI/>}
+				{<FelzenszwalbUI/>}
+				{<SlicUI/>}
 			</div>
 								
 				
