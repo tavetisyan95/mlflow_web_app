@@ -35,6 +35,9 @@ After you install Docker, make sure to launch it on your machine. Then, open the
 `docker-compose -f docker-compose.yaml up -d --build`
 
 This will launch the dockerized application. You might need to wait a minute or two for Docker to install dependencies. After the containers start, the Docker app will show something like this:
+
+![Image](images/docker_status.jpg)
+
 Once the containers are running, navigate to http://127.0.0.1:3000 to access the app.
 
 
