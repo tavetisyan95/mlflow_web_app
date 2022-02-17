@@ -24,21 +24,18 @@ Don't put any http or backslashes in the api_url.
 NOTE: If you want to use different ports for the Flask API or http-server, set them here.
 
 
-## Install Dependencies and Start Web Servers
+## Get Docker
 
-Run the following in terminal:
+Because our app is dockerized, you will need to have Docker on your machine. Go [here](https://docs.docker.com/get-docker/) and download the appropriate version of Docker for your machine.
 
-`bash start.sh 4000`
 
-`4000` indicates the port that the MLflow UI will be run on. This UI is separate from our app and is a product of the MLflow team.
+## Launch the App
+After you install Docker, make sure to launch it on your machine. Then, open the terminal, navigate to the path of the cloned directory, and run the following command:
 
-You may enter another port number if you wish, except for 3000, 5000, and 8080. These are used by our React app, the Flask web server, and http-server respectively.
+`docker-compose -f docker-compose.yaml up -d --build`
 
-NOTE: Make sure that ports 3000, 4000, 5000, and 8080 are publicly available and unused by other processes. If not, either free them up or use other ports.
-
-The app and the MLflow UI should launch in your web browser. If they don't, navigate to http://localhost:3000 (for our app) and http://localhost:4000 (for the MLflow UI).
-
-The app will have been fully launched once its webpage opens in the browser.
+This will launch the dockerized application. You might need to wait a minute or two for Docker to install dependencies. After the containers start, the Docker app will show something like this:
+Once the containers are running, navigate to http://127.0.0.1:3000 to access the app.
 
 
 ## Configuring the estimator
@@ -156,6 +153,3 @@ In its current implementation, the app has some notable limitations, including:
 - No error messages pop up on the webpage if something goes wrong. The only source of information about errors is the app's terminal.
 - Invalid inputs for hyperparameters aren't handled. No error messages are shown in the web browser. The only way to know that something has gone wrong is through terminal logs.
 - Not all parameters of `LogisticRegression` and `LinearRegression` have been implemented in the app.
-
-## Starting in Docker
-```docker-compose -f docker-compose.yaml up -d --build```
