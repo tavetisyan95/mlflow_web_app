@@ -1,3 +1,5 @@
+This repository contains the project for the post `Managing Machine Learning Lifecycles with MLflow Part 3: Building A React Web Application with MLflow` ([link](https://kedion.medium.com/managing-machine-learning-lifecycles-with-mlflow-f230a03c4803)) on the Kedion blog on Medium. 
+
 ## Clone Project
 
 Clone the project:
